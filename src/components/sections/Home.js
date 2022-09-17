@@ -1,13 +1,13 @@
 import React from 'react';
 import bgPicture from './girl-and-pet.png';
-import classes from './HomeSection.module.css'
+import classes from './Home.module.css';
 
-const FirstSection = () => {
+const Home = () => {
   return (
-    <div className={classes['first-section']}>
+    <div className={classes.home}>
       <img src={bgPicture} alt="Woman with cat" />
     </div>
   );
 };
 
-export default FirstSection;
+export default Home;

@@ -1,0 +1,49 @@
+.btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 2px;
+  background: #fff;
+  color: #FF868E;
+  text-transform: uppercase;
+  cursor: pointer;
+  &.light {
+    background: #FBE0DC;
+    &:hover {
+      background: #FF868E;
+      color: #fff;
+    }
+  }
+  &.dark {
+    background: #FF868E;
+    color: #fff;
+  }
+  &.gray {
+    background: #F8F8F7;
+    color: #8C8C8C;
+    &:hover {
+      background: #F8F8F7;
+      border: 2px solid #FBE0DC;
+      color: #FF868E;
+    }
+  }
+  &.mute {
+    cursor: default;
+    &:hover {
+      background: #FF868E;
+    }
+  }
+  &:hover {
+    background: #FBE0DC;
+  }
+  &:active {
+    background: #FF868E;
+    color: #fff;
+  }
+}

@@ -1,0 +1,41 @@
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  height: 80px;
+  padding: 20px;
+}
+
+.navigation-block {
+  display: flex;
+  justify-content: space-between;
+  width: 193px;
+}
+
+.view-settings-block {
+  display: flex;
+  flex: 1 1 auto;
+  justify-content: space-between;
+  margin-left: 10px;
+}
+
+.btn {
+  height: 100%;
+  &_prev {
+    width: 40px;
+  }
+  &_label {
+    width: 143px;
+  }
+  &_upload {
+    width: 143px;
+  }
+  &_sort {
+    width: 40px;
+  }
+  &_list {
+    width: 226px;
+  }
+  &_list2 {
+    width: 101px;
+  }
+}

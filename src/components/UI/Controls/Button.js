@@ -1,12 +1,9 @@
 import React from 'react';
-import classes from './Button.module.css';
+import clsx from 'clsx';
+import classes from './Button.module.scss';
 
-const Button = ({ text, link }) => {
-  return (
-    <div className={classes.btn}>
-      <a href={`${link}`}>{text}</a>
-    </div>
-  );
+const Button = ({ type, option, children }) => {
+  return <div className={clsx(classes.btn, classes[type], classes[option])}>{children}</div>;
 };
 
 export default Button;

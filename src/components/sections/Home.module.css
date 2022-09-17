@@ -1,10 +1,10 @@
-.first-section {
-  background: #FBE0DC;
+.home {
   border-radius: 20px;
   height: 100%;
+  background: #FBE0DC;
 }
 
-.first-section img {
+.home img {
   position: absolute;
   right: 0;
   top: 0;

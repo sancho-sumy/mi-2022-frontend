@@ -1,0 +1,11 @@
+.first-section {
+  background: #FBE0DC;
+  border-radius: 20px;
+  height: 100%;
+}
+
+.first-section img {
+  position: absolute;
+  right: 0;
+  top: 0;
+}

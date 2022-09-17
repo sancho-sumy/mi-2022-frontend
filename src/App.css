@@ -1,0 +1,12 @@
+.container {
+  width: 1440px;
+  margin: 0 auto;
+}
+
+.wrapper {
+  display: grid;
+  position: relative;
+  justify-content: center;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: 100vh;
+}

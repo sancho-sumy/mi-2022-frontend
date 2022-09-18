@@ -13,6 +13,10 @@
   color: #FF868E;
   text-transform: uppercase;
   cursor: pointer;
+  &.active {
+    background: #FF868E;
+    color: #fff;
+  }
   &.light {
     background: #FBE0DC;
     &:hover {

@@ -1,0 +1,23 @@
+.logo {
+  max-width: 106px;
+  max-height: 24px;
+}
+h1 {
+  margin-top: 80px;
+  font-weight: 500;
+  font-size: 44px;
+  line-height: 58px;
+  & ~ p {
+    margin-top: 10px;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 29px;
+    color: #8c8c8c;
+  }
+}
+h3 {
+  margin-top: 60px;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 29px;
+}

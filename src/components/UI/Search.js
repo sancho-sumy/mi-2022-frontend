@@ -12,7 +12,7 @@ const Search = () => {
       />
       <span>
         <div className={classes.btn}>
-          <Button type="light">
+          <Button design="light">
             <span style={{ fontSize: '20px' }} className="icon-search"></span>
           </Button>
         </div>

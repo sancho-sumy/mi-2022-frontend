@@ -1,12 +1,39 @@
-import React from 'react';
-import PageHeader from '../Layout/PageHeader';
-import classes from './Voting.module.css';
+import React, { useEffect, useState } from 'react';
+import PageLayout from '../Layout/PageLayout';
+import ImageList from '../UI/ImageList';
 
-const Voting = ({activeItem}) => {
+import thecatapi from '../../apis/thecatapi';
+
+const Voting = ({ activeItem }) => {
+  const [queryResult, setQueryResult] = useState([]);
+
+  useEffect(() => {
+    const getImages = async () => {
+      const { data } = await thecatapi.get('/images/search', {
+        params: {
+          limit: 5,
+        },
+      });
+      setQueryResult(data);
+      console.log(data);
+    };
+    getImages();
+  }, []);
+
+  const imagesList = queryResult.map((item) => {
+    return (
+      <img
+        src={item.url}
+        alt={item.breeds.length ? item.breeds[0].description : "Cat's image"}
+        key={item.id}
+      />
+    );
+  });
+
   return (
-    <div className={classes.voting}>
-      <PageHeader activeItem={activeItem}/>
-    </div>
+    <PageLayout activeItem={activeItem}>
+      <ImageList imagesList={imagesList} />
+    </PageLayout>
   );
 };
 

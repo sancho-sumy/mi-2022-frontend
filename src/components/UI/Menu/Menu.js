@@ -1,6 +1,6 @@
 import React from 'react';
 import MenuItem from './MenuItem';
-import classes from './Menu.module.css';
+import classes from './Menu.module.scss';
 
 import ItemBreedsImg from './item-breeds.png';
 import ItemVotingImg from './item-voting.png';
@@ -27,9 +27,9 @@ const MENU_ITEMS = [
   },
 ];
 
-const Menu = ({ activeItem }) => {
-  const activeItemHandler = (item) => {
-    activeItem(item);
+const Menu = ({ activeItem, activeItemHandler }) => {
+  const activeItemHandler1 = (item) => {
+    activeItemHandler(item);
   };
 
   const itemsList = MENU_ITEMS.map((item) => (
@@ -39,11 +39,12 @@ const Menu = ({ activeItem }) => {
       image={item.image}
       background={item.background}
       link={item.path}
-      activeItem={activeItemHandler}
+      activeItem={activeItem}
+      activeItemHandler1={activeItemHandler1}
     />
   ));
 
-  return <div className={classes.wrapper}>{itemsList}</div>;
+  return <nav className={classes.wrapper}>{itemsList}</nav>;
 };
 
 export default Menu;

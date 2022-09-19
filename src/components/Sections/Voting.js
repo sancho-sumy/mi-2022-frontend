@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import PageLayout from '../Layout/PageLayout';
-import ImageList from '../UI/ImageList';
 
 import thecatapi from '../../apis/thecatapi';
+import ImageFrame from '../UI/ImageFrame';
+import VotingPanel from '../UI/VotingPanel';
+import LogWrapper from '../UI/Log/LogWrapper';
 
 const Voting = ({ activeItem }) => {
   const [queryResult, setQueryResult] = useState([]);
@@ -32,7 +34,11 @@ const Voting = ({ activeItem }) => {
 
   return (
     <PageLayout activeItem={activeItem}>
-      <ImageList imagesList={imagesList} />
+      <ImageFrame>
+        <img src="https://cdn2.thecatapi.com/images/dal.jpg" alt="Some" />
+        <VotingPanel />
+      </ImageFrame>
+      <LogWrapper/>
     </PageLayout>
   );
 };

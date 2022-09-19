@@ -1,0 +1,45 @@
+.voting-panel {
+  position: absolute;
+  top: 316px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 256px;
+  height: 88px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  column-gap: 4px;
+  justify-content: space-between;
+  border-radius: 20px;
+  border: 4px solid #fff;
+  background: #fff;
+  overflow: hidden;
+  & span {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-size: 30px;
+    color: #fff;
+    &:nth-child(1) {
+      background: #97eab9;
+      &:hover {
+        background: rgba(151, 234, 185, 0.3);
+        color: #97eab9;
+      }
+    }
+    &:nth-child(2) {
+      background: #ff868e;
+      &:hover {
+        background: rgba(255, 134, 142, 0.3);
+        color: #ff868e;
+      }
+    }
+    &:nth-child(3) {
+      background: #ffd280;
+      &:hover {
+        background: rgba(255, 210, 128, 0.3);
+        color: #ffd280;
+      }
+    }
+  }
+}

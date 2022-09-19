@@ -1,6 +1,6 @@
 import React from 'react';
 import bgPicture from './girl-and-pet.png';
-import classes from './Home.module.css';
+import classes from './Home.module.scss';
 
 const Home = () => {
   return (

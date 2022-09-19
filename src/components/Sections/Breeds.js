@@ -12,6 +12,8 @@ const Breeds = ({ activeItem }) => {
       const { data } = await thecatapi.get('/images/search', {
         params: {
           limit: 10,
+          page: 0,
+          order: 'Asc',
         },
       });
       setQueryResult(data);

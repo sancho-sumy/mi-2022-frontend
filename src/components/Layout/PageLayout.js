@@ -6,7 +6,7 @@ import classes from './PageLayout.module.scss';
 const PageLayout = (props) => {
   return (
     <div className={classes['page-layout']}>
-      <PageHeader activeItem={props.activeItem} />
+      <PageHeader currentItem={props.currentItem} />
       <PageWrapper>{props.children}</PageWrapper>
     </div>
   );

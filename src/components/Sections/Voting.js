@@ -6,23 +6,19 @@ import ImageFrame from '../UI/ImageFrame';
 import VotingPanel from '../UI/VotingPanel';
 import LogWrapper from '../UI/Log/LogWrapper';
 
-const Voting = ({ activeItem }) => {
+const Voting = ({ currentItem }) => {
   const [queryResult, setQueryResult] = useState([]);
 
   useEffect(() => {
     const getImages = async () => {
-      const { data } = await thecatapi.get('/images/search', {
-        params: {
-          limit: 5,
-        },
-      });
+      const { data } = await thecatapi.get('/images/search');
       setQueryResult(data);
       console.log(data);
     };
     getImages();
   }, []);
 
-  const imagesList = queryResult.map((item) => {
+  const imageForVoting = queryResult.map((item) => {
     return (
       <img
         src={item.url}
@@ -33,9 +29,9 @@ const Voting = ({ activeItem }) => {
   });
 
   return (
-    <PageLayout activeItem={activeItem}>
+    <PageLayout currentItem={currentItem}>
       <ImageFrame>
-        <img src="https://cdn2.thecatapi.com/images/dal.jpg" alt="Some" />
+        {imageForVoting}
         <VotingPanel />
       </ImageFrame>
       <LogWrapper/>

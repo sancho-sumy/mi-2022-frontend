@@ -2,6 +2,7 @@ import React from 'react';
 import clsx from 'clsx';
 import Button from '../UI/Controls/Button';
 import classes from './PageHeader.module.scss';
+import Select from '../UI/Controls/Select';
 
 const UploadBlock = () => {
   return (
@@ -18,8 +19,10 @@ const ViewSettingsBlock = () => {
   return (
     <div className={classes['view-settings-block']}>
       <div className={clsx(classes.btn, classes.btn_list)}>
-        <Button design="gray"></Button>
+        <Select />
+        {/* <Button design="gray"></Button> */}
       </div>
+
       <div className={clsx(classes.btn, classes.btn_list2)}>
         <Button design="gray"></Button>
       </div>
@@ -68,7 +71,7 @@ const LabelElement = ({ label, design }) => {
   );
 };
 
-const PageHeader = ({ activeItem }) => {
+const PageHeader = ({ currentItem }) => {
   return (
     <div className={classes['page-header']}>
       <nav className={classes['navigation-block']}>
@@ -77,11 +80,11 @@ const PageHeader = ({ activeItem }) => {
             <span style={{ fontSize: '20px' }} className="icon-back"></span>
           </Button>
         </div>
-        <LabelElement label={activeItem} design={'sectionName'} />
-        {activeItem === 'voting' && <LabelElement label={'28'} design={'breedId'} />}
+        <LabelElement label={currentItem} design={'sectionName'} />
+        {currentItem === 'voting' && <LabelElement label={'28'} design={'breedId'} />}
       </nav>
-      {activeItem === 'gallery' && <UploadBlock />}
-      {activeItem === 'breeds' && <ViewSettingsBlock />}
+      {currentItem === 'gallery' && <UploadBlock />}
+      {currentItem === 'breeds' && <ViewSettingsBlock />}
     </div>
   );
 };

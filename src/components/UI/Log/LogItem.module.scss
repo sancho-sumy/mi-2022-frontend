@@ -5,6 +5,7 @@
   height: 100%;
   background: #f8f8f7;
   border-radius: 10px;
+  overflow: hidden;
   .time {
     display: flex;
     justify-content: center;
@@ -18,6 +19,7 @@
   }
   .text {
     display: flex;
+    flex: 0 1 100px;
     justify-content: left;
     align-items: center;
     font-size: 16px;

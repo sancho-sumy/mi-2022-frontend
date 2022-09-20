@@ -1,19 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import ImageList from '../UI/ImageList';
 import PageLayout from '../Layout/PageLayout';
 
 import thecatapi from '../../apis/thecatapi';
+import ImageFrame from '../UI/ImageFrame';
+import VotingPanel from '../UI/VotingPanel';
+import LogWrapper from '../UI/Log/LogWrapper';
 
-const Gallery = ({ currentItem }) => {
+const DisLikes = ({ currentItem }) => {
   const [queryResult, setQueryResult] = useState([]);
 
   useEffect(() => {
     const getImages = async () => {
-      const { data } = await thecatapi.get('/images/search', {
-        params: {
-          limit: 15,
-        },
-      });
+      const { data } = await thecatapi.get('/images/search');
       setQueryResult(data);
       console.log(data);
     };
@@ -32,9 +30,13 @@ const Gallery = ({ currentItem }) => {
 
   return (
     <PageLayout currentItem={currentItem}>
-      <ImageList imagesList={imagesList} />
+      <ImageFrame>
+        {imagesList}
+        <VotingPanel />
+      </ImageFrame>
+      <LogWrapper/>
     </PageLayout>
   );
 };
 
-export default Gallery;
+export default DisLikes;

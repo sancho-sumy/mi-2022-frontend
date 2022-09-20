@@ -6,9 +6,9 @@ import classes from './VotingPanel.module.scss';
 const VotingPanel = () => {
   return (
     <div className={clsx(classes['voting-panel'])}>
-      <span class="icon-like"></span>
-      <span class="icon-fav"></span>
-      <span class="icon-dislike"></span>
+      <span className="icon-like"></span>
+      <span className="icon-fav"></span>
+      <span className="icon-dislike"></span>
     </div>
   );
 };

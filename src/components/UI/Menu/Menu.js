@@ -27,9 +27,9 @@ const MENU_ITEMS = [
   },
 ];
 
-const Menu = ({ activeItem, activeItemHandler }) => {
-  const activeItemHandler1 = (item) => {
-    activeItemHandler(item);
+const Menu = ({ currentItem, activeItem }) => {
+  const activeItemHandler = (item) => {
+    activeItem(item);
   };
 
   const itemsList = MENU_ITEMS.map((item) => (
@@ -39,8 +39,8 @@ const Menu = ({ activeItem, activeItemHandler }) => {
       image={item.image}
       background={item.background}
       link={item.path}
-      activeItem={activeItem}
-      activeItemHandler1={activeItemHandler1}
+      currentItem={currentItem}
+      activeItem={activeItemHandler}
     />
   ));
 

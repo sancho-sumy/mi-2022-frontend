@@ -8,12 +8,17 @@ import Voting from './components/Sections/Voting';
 import Breeds from './components/Sections/Breeds';
 import Gallery from './components/Sections/Gallery';
 import Welcome from './components/Sections/Welcome';
+import BreedsInfo from './components/Sections/BreedsInfo';
+import Favourites from './components/Sections/Favourites';
+import Likes from './components/Sections/Likes';
+import Dislikes from './components/Sections/Dislikes';
+
 
 function App() {
-  const [activeItem, setActiveItem] = useState('home');
+  const [currentItem, setCurrentItem] = useState('home');
 
   const activeItemHandler = (item) => {
-    setActiveItem(item);
+    setCurrentItem(item);
   };
 
   return (
@@ -21,13 +26,17 @@ function App() {
       <div className="wrapper">
         <LeftSection>
           <Welcome />
-          <Menu activeItem={activeItem} activeItemHandler={activeItemHandler} />
+          <Menu currentItem={currentItem} activeItem={activeItemHandler} />
         </LeftSection>
-        <RightSection activeItem={activeItem}>
-          {activeItem === 'home' && <Home />}
-          {activeItem === 'voting' && <Voting activeItem={activeItem} />}
-          {activeItem === 'breeds' && <Breeds activeItem={activeItem} />}
-          {activeItem === 'gallery' && <Gallery activeItem={activeItem} />}
+        <RightSection currentItem={currentItem} activeItem={activeItemHandler}>
+          {currentItem === 'home' && <Home />}
+          {currentItem === 'voting' && <Voting currentItem={currentItem} />}
+          {currentItem === 'breeds' && <Breeds currentItem={currentItem} />}
+          {currentItem === 'gallery' && <Gallery currentItem={currentItem} />}
+          {currentItem === 'breedsInfo' && <BreedsInfo currentItem={currentItem} />}
+          {currentItem === 'favourites' && <Favourites currentItem={currentItem} />}
+          {currentItem === 'likes' && <Likes currentItem={currentItem} />}
+          {currentItem === 'dislikes' && <Dislikes currentItem={currentItem} />}
         </RightSection>
       </div>
     </main>

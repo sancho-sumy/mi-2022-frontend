@@ -2,14 +2,13 @@ import React from 'react';
 import classes from './MenuItem.module.scss';
 import Button from '../Controls/Button';
 
-const MenuItem = ({ name, image, background, link, activeItem, activeItemHandler1 }) => {
+const MenuItem = ({ name, image, background, link, currentItem, activeItem }) => {
   const onButtonClick = () => {
-    activeItemHandler1(name);
+    activeItem(name);
   };
 
-  const isActive = activeItem === name ? 'active' : '';
+  const isActive = currentItem === name ? 'active' : '';
 
-  console.log(isActive);
   return (
     <div className={classes['menu-item']}>
       <div className={`${classes.card} ${classes.breeds}`} style={{ background: `${background}` }}>

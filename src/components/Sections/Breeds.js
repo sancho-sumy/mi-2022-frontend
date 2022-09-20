@@ -4,7 +4,7 @@ import ImageList from '../UI/ImageList';
 
 import thecatapi from '../../apis/thecatapi';
 
-const Breeds = ({ activeItem }) => {
+const Breeds = ({ currentItem }) => {
   const [queryResult, setQueryResult] = useState([]);
 
   useEffect(() => {
@@ -33,7 +33,7 @@ const Breeds = ({ activeItem }) => {
   });
 
   return (
-    <PageLayout activeItem={activeItem}>
+    <PageLayout currentItem={currentItem}>
       <ImageList imagesList={imagesList} />
     </PageLayout>
   );

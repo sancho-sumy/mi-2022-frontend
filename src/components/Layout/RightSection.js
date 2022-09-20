@@ -3,10 +3,15 @@ import Header from '../Layout/Header';
 import classes from './RightSection.module.scss';
 
 const RightSection = (props) => {
+
+  const activeItemHandler = (item) => {
+    props.activeItem(item);
+  };
+
   return (
     <div className={classes['right-section']}>
       <section className={classes.wrapper}>
-        {props.activeItem !== 'home' && <Header />}
+        {props.currentItem !== 'home' && <Header currentItem={props.currentItem} activeItem={activeItemHandler}/>}
         {props.children}
       </section>
     </div>

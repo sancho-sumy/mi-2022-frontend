@@ -1,40 +1,54 @@
 import React, { useEffect, useState } from 'react';
-import PageLayout from '../Layout/PageLayout';
+import clsx from 'clsx';
 
-import thecatapi from '../../apis/thecatapi';
+import PageLayout from '../Layout/PageLayout';
 import ImageFrame from '../UI/ImageFrame';
-import VotingPanel from '../UI/VotingPanel';
-import LogWrapper from '../UI/Log/LogWrapper';
+import GalleryNavigation from '../UI/Controls/GalleryNavigation';
+
+import classes from './BreedsInfo.module.scss';
+import thecatapi from '../../apis/thecatapi';
 
 const BreedsInfo = ({ currentItem }) => {
   const [queryResult, setQueryResult] = useState([]);
+  const [currentImage, setCurrentImage] = useState([]);
 
   useEffect(() => {
     const getImages = async () => {
-      const { data } = await thecatapi.get('/images/search');
+      const { data } = await thecatapi.get('/images/search', {
+        params: {
+          breed_id: 'beng',
+          limit: 8,
+        },
+      });
       setQueryResult(data);
-      console.log(data);
+      setCurrentImage(data[0].url);
     };
     getImages();
   }, []);
 
-  const imagesBreedsInfo = queryResult.map((item) => {
-    return (
-      <img
-        src={item.url}
-        alt={item.breeds.length ? item.breeds[0].description : "Cat's image"}
-        key={item.id}
-      />
-    );
-  });
+  const onItemChange = (index) => {
+    setCurrentImage(queryResult[index].url);
+  };
 
   return (
     <PageLayout currentItem={currentItem}>
       <ImageFrame>
-        {imagesBreedsInfo}
-        <VotingPanel />
+        <img src={currentImage} alt={'Breed example'} />
+        <GalleryNavigation
+          queryResult={queryResult}
+          onItemChange={onItemChange}
+        ></GalleryNavigation>
       </ImageFrame>
-      <LogWrapper/>
+      <div className={clsx(classes['breeds-info'])}>
+        <h2>Basenji</h2>
+        <p>Family companion cat</p>
+        <div className={clsx(classes.table)}>
+          <div><span>Temperament:</span> Active, Energetic, Independent, Intelligent, Gentle</div>
+          <div><span>Origin:</span> United States</div>
+          <div><span>Weight</span>: 3 - 5 kgs</div>
+          <div><span>Life span:</span> 14 - 15 years</div>
+        </div>
+      </div>
     </PageLayout>
   );
 };

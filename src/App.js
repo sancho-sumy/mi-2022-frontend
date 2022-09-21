@@ -36,7 +36,8 @@ function App() {
           {currentItem === 'breedsInfo' && <BreedsInfo currentItem={currentItem} />}
           {currentItem === 'favourites' && <Favourites currentItem={currentItem} />}
           {currentItem === 'likes' && <Likes currentItem={currentItem} />}
-          {currentItem === 'dislikes' && <Dislikes currentItem={currentItem} />}
+          {/* {currentItem === 'dislikes' && <Dislikes currentItem={currentItem} />} */}
+          {currentItem === 'dislikes' && <BreedsInfo currentItem={currentItem} />}
         </RightSection>
       </div>
     </main>

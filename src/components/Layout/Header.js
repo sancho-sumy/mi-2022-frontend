@@ -23,7 +23,7 @@ const Header = ({ activeItem, currentItem }) => {
   ];
 
   const itemsList = MENU_ITEMS.map((item) => (
-    <div onClick={() => onButtonClick(item.name)} className={classes.btn}>
+    <div onClick={() => onButtonClick(item.name)} className={classes.btn} key={item.name}>
       <Button isActive={currentItem === item.name && 'active'}>
         <span style={{ fontSize: '30px' }} className={item.icon}></span>
       </Button>

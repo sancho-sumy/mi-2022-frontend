@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import clsx from 'clsx';
 import Button from '../UI/Controls/Button';
 import classes from './PageHeader.module.scss';
@@ -15,16 +15,36 @@ const UploadBlock = () => {
   );
 };
 
-const ViewSettingsBlock = () => {
+const ViewSettingsBlock = ({ breedsItems, limitItems }) => {
+  const [currentBreed, setCurrentBreed] = useState('2');
+
+  const onBreedsSelection = () => {
+    setCurrentBreed('selectedItem');
+  };
+  console.log(currentBreed);
+
+  const breedsItemsList = breedsItems.map((item) => {
+    return (
+      <option onChange={() => onBreedsSelection('selectedItem')} key={item.id} value={item.value}>
+        {item.name}
+      </option>
+    );
+  });
+
+  const limitItemsList = limitItems.map((item) => {
+    return (
+      <option key={item.name} value={item.value}>
+        {item.name}
+      </option>
+    );
+  });
   return (
     <div className={classes['view-settings-block']}>
       <div className={clsx(classes.btn, classes.btn_list)}>
-        <Select />
-        {/* <Button design="gray"></Button> */}
+        <Select>{breedsItemsList}</Select>
       </div>
-
-      <div className={clsx(classes.btn, classes.btn_list2)}>
-        <Button design="gray"></Button>
+      <div className={clsx(classes.btn, classes.btn_list)}>
+        <Select>{limitItemsList}</Select>{' '}
       </div>
       <div className={clsx(classes.btn, classes.btn_sort)}>
         <Button design="gray">
@@ -71,7 +91,7 @@ const LabelElement = ({ label, design }) => {
   );
 };
 
-const PageHeader = ({ currentItem }) => {
+const PageHeader = ({ currentItem, breedsItems, limitItems }) => {
   return (
     <div className={classes['page-header']}>
       <nav className={classes['navigation-block']}>
@@ -84,7 +104,9 @@ const PageHeader = ({ currentItem }) => {
         {currentItem === 'voting' && <LabelElement label={'28'} design={'breedId'} />}
       </nav>
       {currentItem === 'gallery' && <UploadBlock />}
-      {currentItem === 'breeds' && <ViewSettingsBlock />}
+      {currentItem === 'breeds' && (
+        <ViewSettingsBlock limitItems={limitItems} breedsItems={breedsItems} />
+      )}
     </div>
   );
 };

@@ -3,6 +3,7 @@ import ImageList from '../UI/ImageList';
 import PageLayout from '../Layout/PageLayout';
 
 import thecatapi from '../../apis/thecatapi';
+import GalleryFilter from '../UI/GalleryFilter';
 
 const Gallery = ({ currentItem }) => {
   const [queryResult, setQueryResult] = useState([]);
@@ -32,6 +33,7 @@ const Gallery = ({ currentItem }) => {
 
   return (
     <PageLayout currentItem={currentItem}>
+      <GalleryFilter />
       <ImageList imagesList={imagesList} />
     </PageLayout>
   );

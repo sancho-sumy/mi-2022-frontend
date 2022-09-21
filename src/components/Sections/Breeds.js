@@ -4,8 +4,36 @@ import ImageList from '../UI/ImageList';
 
 import thecatapi from '../../apis/thecatapi';
 
+const limitItems = [
+  {
+    name: 'Limit: 5',
+    value: 5,
+  },
+  {
+    name: 'Limit: 10',
+    value: 10,
+  },
+  {
+    name: 'Limit: 15',
+    value: 15,
+  },
+  {
+    name: 'Limit: 20',
+    value: 20,
+  },
+];
+
 const Breeds = ({ currentItem }) => {
   const [queryResult, setQueryResult] = useState([]);
+  const [breedsItems, setBreedsItems] = useState([])
+
+  useEffect(() => {
+    const getBreedsList = async () => {
+      const { data } = await thecatapi.get('/breeds');
+      setBreedsItems(data);
+    };
+    getBreedsList();
+  }, []);
 
   useEffect(() => {
     const getImages = async () => {
@@ -33,7 +61,7 @@ const Breeds = ({ currentItem }) => {
   });
 
   return (
-    <PageLayout currentItem={currentItem}>
+    <PageLayout currentItem={currentItem} limitItems={limitItems} breedsItems={breedsItems}>
       <ImageList imagesList={imagesList} />
     </PageLayout>
   );

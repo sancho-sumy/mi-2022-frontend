@@ -8,7 +8,7 @@ import GalleryNavigation from '../UI/Controls/GalleryNavigation';
 import classes from './BreedsInfo.module.scss';
 import thecatapi from '../../apis/thecatapi';
 
-const BreedsInfo = ({ currentItem }) => {
+const BreedsInfo = ({ currentItem, currentBreed, breedsList }) => {
   const [queryResult, setQueryResult] = useState([]);
   const [currentImage, setCurrentImage] = useState([]);
 
@@ -16,7 +16,7 @@ const BreedsInfo = ({ currentItem }) => {
     const getImages = async () => {
       const { data } = await thecatapi.get('/images/search', {
         params: {
-          breed_id: 'beng',
+          breed_id: currentBreed,
           limit: 8,
         },
       });
@@ -24,14 +24,13 @@ const BreedsInfo = ({ currentItem }) => {
       setCurrentImage(data[0].url);
     };
     getImages();
-  }, []);
+  }, [currentBreed]);
 
   const onItemChange = (index) => {
     setCurrentImage(queryResult[index].url);
   };
-
   return (
-    <PageLayout currentItem={currentItem}>
+    <PageLayout currentItem={currentItem} currentBreed={currentBreed} breedsList={breedsList}>
       <ImageFrame>
         <img src={currentImage} alt={'Breed example'} />
         <GalleryNavigation
@@ -40,17 +39,24 @@ const BreedsInfo = ({ currentItem }) => {
         ></GalleryNavigation>
       </ImageFrame>
       <div className={clsx(classes['breeds-info'])}>
-        <h2>Basenji</h2>
-        <p>Family companion cat</p>
+        <h2>{queryResult[0]?.breeds[0].name}</h2>
+        <p>{queryResult[0]?.breeds[0].description}</p>
         <div className={clsx(classes.table)}>
-          <div><span>Temperament:</span> Active, Energetic, Independent, Intelligent, Gentle</div>
-          <div><span>Origin:</span> United States</div>
-          <div><span>Weight</span>: 3 - 5 kgs</div>
-          <div><span>Life span:</span> 14 - 15 years</div>
+          <div>
+            <span>Temperament:</span> {queryResult[0]?.breeds[0].temperament}
+          </div>
+          <div>
+            <span>Origin:</span> {queryResult[0]?.breeds[0].origin}
+          </div>
+          <div>
+            <span>Weight:</span> {queryResult[0]?.breeds[0].weight.metric} kgs
+          </div>
+          <div>
+            <span>Life span:</span> {queryResult[0]?.breeds[0].life_span} years
+          </div>
         </div>
       </div>
     </PageLayout>
   );
 };
-
 export default BreedsInfo;

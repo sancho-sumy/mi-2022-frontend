@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import clsx from 'clsx';
+
 import Button from '../UI/Controls/Button';
-import classes from './PageHeader.module.scss';
 import Select from '../UI/Controls/Select';
+
+import sectionsList from '../../assets/sectionsList';
+import classes from './PageHeader.module.scss';
 
 const UploadBlock = () => {
   return (
@@ -15,7 +18,7 @@ const UploadBlock = () => {
   );
 };
 
-const ViewSettingsBlock = ({ breedsItems, limitItems }) => {
+const ViewSettingsBlock = ({ breedsList, limitItems }) => {
   const [currentBreed, setCurrentBreed] = useState('2');
 
   const onBreedsSelection = () => {
@@ -23,7 +26,7 @@ const ViewSettingsBlock = ({ breedsItems, limitItems }) => {
   };
   console.log(currentBreed);
 
-  const breedsItemsList = breedsItems.map((item) => {
+  const breedsItemsList = breedsList.map((item) => {
     return (
       <option onChange={() => onBreedsSelection('selectedItem')} key={item.id} value={item.value}>
         {item.name}
@@ -53,7 +56,7 @@ const ViewSettingsBlock = ({ breedsItems, limitItems }) => {
       </div>
       <div className={clsx(classes.btn, classes.btn_sort)}>
         <Button design="gray">
-          <span style={{ fontSize: '20px' }} className="icon-sort-revert"></span>
+          <span style={{ fontSize: '20px' }} className="icon-sort-reverse"></span>
         </Button>
       </div>
     </div>
@@ -91,7 +94,7 @@ const LabelElement = ({ label, design }) => {
   );
 };
 
-const PageHeader = ({ currentItem, breedsItems, limitItems }) => {
+const PageHeader = ({ currentItem, breedsList, limitItems, currentBreed }) => {
   return (
     <div className={classes['page-header']}>
       <nav className={classes['navigation-block']}>
@@ -100,12 +103,20 @@ const PageHeader = ({ currentItem, breedsItems, limitItems }) => {
             <span style={{ fontSize: '20px' }} className="icon-back"></span>
           </Button>
         </div>
-        <LabelElement label={currentItem} design={'sectionName'} />
-        {currentItem === 'voting' && <LabelElement label={'28'} design={'breedId'} />}
+        <LabelElement
+          label={sectionsList.filter((item) => item.name === currentItem)[0]?.label_en}
+          design={'sectionName'}
+        />
+        {currentItem === 'breedsInfo' && (
+          <LabelElement
+            label={breedsList.filter((item) => item.id === currentBreed)[0]?.name}
+            design={'breedId'}
+          />
+        )}
       </nav>
       {currentItem === 'gallery' && <UploadBlock />}
       {currentItem === 'breeds' && (
-        <ViewSettingsBlock limitItems={limitItems} breedsItems={breedsItems} />
+        <ViewSettingsBlock limitItems={limitItems} breedsList={breedsList} />
       )}
     </div>
   );

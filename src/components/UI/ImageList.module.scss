@@ -3,13 +3,13 @@
   grid: repeat(3, minmax(auto, 140px)) / repeat(3, 200px);
   grid-auto-rows: minmax(auto, 140px);
   gap: 20px;
-  img {
+  & > div {
+    position: relative;
     display: block;
     width: 100%;
     height: 100%;
-    max-height: 100%;
     border-radius: 20px;
-    object-fit: cover;
+    overflow: hidden;
     &:nth-child(10n+1) {
       grid-area: 2 span;
     }

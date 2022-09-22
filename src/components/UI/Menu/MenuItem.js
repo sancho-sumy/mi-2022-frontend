@@ -2,12 +2,12 @@ import React from 'react';
 import classes from './MenuItem.module.scss';
 import Button from '../Controls/Button';
 
-const MenuItem = ({ name, image, background, link, currentItem, activeItem }) => {
+const MenuItem = ({ btnText, image, background, link, currentItem, activeItem }) => {
   const onButtonClick = () => {
-    activeItem(name);
+    activeItem(btnText);
   };
 
-  const isActive = currentItem === name ? 'active' : '';
+  const isActive = currentItem === btnText ? 'active' : '';
 
   return (
     <div className={classes['menu-item']}>
@@ -16,7 +16,7 @@ const MenuItem = ({ name, image, background, link, currentItem, activeItem }) =>
       </div>
       <div onClick={onButtonClick} className={classes.btn}>
         <Button link={link} isActive={isActive}>
-          {name}
+          {btnText}
         </Button>
       </div>
     </div>

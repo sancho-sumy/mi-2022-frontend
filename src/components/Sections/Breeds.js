@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import PageLayout from '../Layout/PageLayout';
 import ImageList from '../UI/ImageList';
 
-import thecatapi from '../../apis/thecatapi';
+import ImageItem from '../UI/ImageItem';
 
 const limitItems = [
   {
@@ -23,46 +23,29 @@ const limitItems = [
   },
 ];
 
-const Breeds = ({ currentItem }) => {
-  const [queryResult, setQueryResult] = useState([]);
-  const [breedsItems, setBreedsItems] = useState([])
+const Breeds = (props) => {
 
-  useEffect(() => {
-    const getBreedsList = async () => {
-      const { data } = await thecatapi.get('/breeds');
-      setBreedsItems(data);
-    };
-    getBreedsList();
-  }, []);
+  const openBreedInfoHandler = (item) => {
+    props.openBreedInfoHandler(item)
+  }
 
-  useEffect(() => {
-    const getImages = async () => {
-      const { data } = await thecatapi.get('/images/search', {
-        params: {
-          limit: 10,
-          page: 0,
-          order: 'Asc',
-        },
-      });
-      setQueryResult(data);
-      console.log(data);
-    };
-    getImages();
-  }, []);
-
-  const imagesList = queryResult.map((item) => {
+  const imagesList = props.breedsImages.map((item) => {
     return (
-      <img
+      <ImageItem
         src={item.url}
         alt={item.breeds.length ? item.breeds[0].description : "Cat's image"}
         key={item.id}
+        currentItem={props.currentItem}
+        btnText={item.breeds.length ? item.breeds[0].name : 'Unknown breed'}
+        breedId={item.breeds.length ? item.breeds[0].id : null}
+        openBreedInfo={openBreedInfoHandler}
       />
     );
   });
 
   return (
-    <PageLayout currentItem={currentItem} limitItems={limitItems} breedsItems={breedsItems}>
-      <ImageList imagesList={imagesList} />
+    <PageLayout currentItem={props.currentItem} limitItems={limitItems} breedsList={props.breedsList}>
+      <ImageList imagesList={imagesList} currentItem={props.currentItem} />
     </PageLayout>
   );
 };

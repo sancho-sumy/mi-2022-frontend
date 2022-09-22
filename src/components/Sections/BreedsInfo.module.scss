@@ -1,7 +1,6 @@
 .breeds-info {
   position: relative;
   width: 100%;
-  max-height: 255px;
   margin-top: 51px;
   border: 2px solid #fbe0dc;
   border-radius: 20px;
@@ -20,8 +19,6 @@
   }
   & p {
     font-weight: 500;
-    font-size: 20px;
-    line-height: 29px;
     color: #8c8c8c;
     text-align: center;
     margin-top: 26px;

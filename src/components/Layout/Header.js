@@ -1,34 +1,21 @@
 import React from 'react';
 import Search from '../UI/Search';
 import Button from '../UI/Controls/Button';
+
+import sectionsList from '../../assets/sectionsList';
 import classes from './Header.module.scss';
 
 const Header = ({ activeItem, currentItem }) => {
-  const MENU_ITEMS = [
-    {
-      name: 'likes',
-      icon: 'icon-like',
-      path: '/likes',
-    },
-    {
-      name: 'favourites',
-      icon: 'icon-fav',
-      path: '/favourites',
-    },
-    {
-      name: 'dislikes',
-      icon: 'icon-dislike',
-      path: '/dislikes',
-    },
-  ];
-
-  const itemsList = MENU_ITEMS.map((item) => (
-    <div onClick={() => onButtonClick(item.name)} className={classes.btn} key={item.name}>
-      <Button isActive={currentItem === item.name && 'active'}>
-        <span style={{ fontSize: '30px' }} className={item.icon}></span>
-      </Button>
-    </div>
-  ));
+  const itemsList = sectionsList.map(
+    (item) =>
+      item.location === 'header' && (
+        <div onClick={() => onButtonClick(item.name)} className={classes.btn} key={item.name}>
+          <Button isActive={currentItem === item.name && 'active'}>
+            <span style={{ fontSize: '30px' }} className={item.image}></span>
+          </Button>
+        </div>
+      )
+  );
 
   const onButtonClick = (name) => {
     activeItem(name);

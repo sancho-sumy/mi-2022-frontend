@@ -11,10 +11,9 @@
 }
 
 .view-settings-block {
-  display: flex;
-  flex: 1 1 auto;
-  justify-content: space-between;
-  margin-left: 10px;
+  display: grid;
+  grid-template-columns: 226px 101px 40px 40px;
+  column-gap: 10px;
 }
 
 .btn {
@@ -23,7 +22,7 @@
     width: 40px;
   }
   &_label {
-    width: 143px;
+    min-width: 143px;
     margin: 0 10px;
   }
   &_label-breed-id {
@@ -34,11 +33,5 @@
   }
   &_sort {
     width: 40px;
-  }
-  &_list {
-    width: 226px;
-  }
-  &_list2 {
-    width: 101px;
   }
 }

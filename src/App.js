@@ -9,9 +9,7 @@ import Breeds from './components/Sections/Breeds';
 import Gallery from './components/Sections/Gallery';
 import Welcome from './components/Sections/Welcome';
 import BreedsInfo from './components/Sections/BreedsInfo';
-import Favourites from './components/Sections/Favourites';
-import Likes from './components/Sections/Likes';
-import Dislikes from './components/Sections/Dislikes';
+import Lists from './components/Sections/Lists';
 
 import './App.scss';
 import thecatapi from './apis/thecatapi';
@@ -76,9 +74,9 @@ function App() {
             />
           )}
           {currentItem === 'gallery' && <Gallery currentItem={currentItem} />}
-          {currentItem === 'favourites' && <Favourites currentItem={currentItem} />}
-          {currentItem === 'likes' && <Likes currentItem={currentItem} />}
-          {currentItem === 'dislikes' && <Dislikes currentItem={currentItem} />}
+          {currentItem === 'favourites' && <Lists currentItem={currentItem} />}
+          {currentItem === 'likes' && <Lists currentItem={currentItem} />}
+          {currentItem === 'dislikes' && <Lists currentItem={currentItem} />}
           {currentItem === 'breedsInfo' && (
             <BreedsInfo
               currentItem={currentItem}

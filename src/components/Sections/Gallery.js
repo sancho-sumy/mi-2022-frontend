@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import ImageList from '../UI/ImageList';
 import PageLayout from '../Layout/PageLayout';
+import ImageItem from '../UI/ImageItem';
 
 import thecatapi from '../../apis/thecatapi';
 import GalleryFilter from '../UI/GalleryFilter';
@@ -23,10 +24,13 @@ const Gallery = ({ currentItem }) => {
 
   const imagesList = queryResult.map((item) => {
     return (
-      <img
+      <ImageItem
         src={item.url}
         alt={item.breeds.length ? item.breeds[0].description : "Cat's image"}
         key={item.id}
+        currentItem={currentItem}
+        btnText={<span style={{ fontSize: '20px', letterSpacing: '0'}} className="icon-fav"></span>}
+        breedId={item.breeds.length ? item.breeds[0].id : null}
       />
     );
   });

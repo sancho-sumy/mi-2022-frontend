@@ -7,34 +7,41 @@ import VotingPanel from '../UI/VotingPanel';
 import LogWrapper from '../UI/Log/LogWrapper';
 
 const Voting = ({ currentItem }) => {
-  const [queryResult, setQueryResult] = useState([]);
+  const [image, setImage] = useState([]);
 
   useEffect(() => {
-    const getImages = async () => {
+    const getImage = async () => {
       const { data } = await thecatapi.get('/images/search');
-      setQueryResult(data);
-      console.log(data);
+      setImage(data[0]);
+      console.log(data[0].id);
     };
-    getImages();
+    getImage();
   }, []);
 
-  const imageForVoting = queryResult.map((item) => {
-    return (
-      <img
-        src={item.url}
-        alt={item.breeds.length ? item.breeds[0].description : "Cat's image"}
-        key={item.id}
-      />
-    );
-  });
+  const votingButtonHandler = async (buttonId) => {
+    if (buttonId === 'favourite') {
+      await thecatapi.post('/favourites', {
+        image_id: image.id,
+      });
+    } else {
+      await thecatapi.post('/votes', {
+        image_id: image.id,
+        value: buttonId === 'like' ? 1 : 0,
+      });
+    }
+  };
 
   return (
     <PageLayout currentItem={currentItem}>
       <ImageFrame>
-        {imageForVoting}
-        <VotingPanel />
+        <img
+          src={image.url}
+          alt={image.breeds?.length ? image.breeds[0]?.description : "Cat's image"}
+          key={image.id}
+        />
+        <VotingPanel onVotingButtonClick={votingButtonHandler} />
       </ImageFrame>
-      <LogWrapper/>
+      <LogWrapper />
     </PageLayout>
   );
 };

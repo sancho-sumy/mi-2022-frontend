@@ -24,7 +24,6 @@ const ViewSettingsBlock = ({ breedsList, limitItems }) => {
   const onBreedsSelection = () => {
     setCurrentBreed('selectedItem');
   };
-  console.log(currentBreed);
 
   const breedsItemsList = breedsList.map((item) => {
     return (
@@ -65,11 +64,11 @@ const ViewSettingsBlock = ({ breedsList, limitItems }) => {
 
 //! Temporary! Label elements should be refactored!
 
-const LabelElement = ({ label, design }) => {
+const LabelElement = ({ label, design, currentItem }) => {
   const SectionNameLabel = () => {
     return (
       <div className={clsx(classes.btn, classes.btn_label)}>
-        <Button design="dark" option="mute">
+        <Button design={currentItem === 'breedsInfo' ? 'light' : 'dark'}>
           <span style={{ fontSize: '20px' }}>{label}</span>
         </Button>
       </div>
@@ -106,6 +105,7 @@ const PageHeader = ({ currentItem, breedsList, limitItems, currentBreed }) => {
         <LabelElement
           label={sectionsList.filter((item) => item.name === currentItem)[0]?.label_en}
           design={'sectionName'}
+          currentItem={currentItem}
         />
         {currentItem === 'breedsInfo' && (
           <LabelElement

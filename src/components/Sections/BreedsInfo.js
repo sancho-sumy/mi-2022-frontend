@@ -39,20 +39,20 @@ const BreedsInfo = ({ currentItem, currentBreed, breedsList }) => {
         ></GalleryNavigation>
       </ImageFrame>
       <div className={clsx(classes['breeds-info'])}>
-        <h2>{queryResult[0]?.breeds[0].name}</h2>
-        <p>{queryResult[0]?.breeds[0].description}</p>
+        <h2>{queryResult[0]?.breeds[0]?.name}</h2>
+        <p>{queryResult[0]?.breeds[0]?.description}</p>
         <div className={clsx(classes.table)}>
           <div>
-            <span>Temperament:</span> {queryResult[0]?.breeds[0].temperament}
+            <span>Temperament:</span> {queryResult[0]?.breeds[0]?.temperament}
           </div>
           <div>
-            <span>Origin:</span> {queryResult[0]?.breeds[0].origin}
+            <span>Origin:</span> {queryResult[0]?.breeds[0]?.origin}
           </div>
           <div>
-            <span>Weight:</span> {queryResult[0]?.breeds[0].weight.metric} kgs
+            <span>Weight:</span> {queryResult[0]?.breeds[0]?.weight.metric} kgs
           </div>
           <div>
-            <span>Life span:</span> {queryResult[0]?.breeds[0].life_span} years
+            <span>Life span:</span> {queryResult[0]?.breeds[0]?.life_span} years
           </div>
         </div>
       </div>

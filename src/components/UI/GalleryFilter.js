@@ -25,7 +25,7 @@ function GalleryFilter() {
         <h4>Limit</h4>
         <div className={clsx(classes.double)}>
           <Select />
-          <Button><span style={{ fontSize: '20px' }} className={'icon-update'}></span></Button>
+          <Button><span style={{ fontSize: '20px', letterSpacing: '0' }} className={'icon-update'}></span></Button>
         </div>
       </div>
     </div>

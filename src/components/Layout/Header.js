@@ -19,7 +19,6 @@ const Header = ({ activeItem, currentItem }) => {
 
   const onButtonClick = (name) => {
     activeItem(name);
-    console.log(name, 'button clicked');
   };
 
   return (

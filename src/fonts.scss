@@ -1,18 +1,21 @@
-@import "variables";
+@import 'variables';
 
 @font-face {
   font-family: '#{$icomoon-font-family}';
-  src:  url('#{$icomoon-font-path}/#{$icomoon-font-family}.eot?wux8ch');
-  src:  url('#{$icomoon-font-path}/#{$icomoon-font-family}.eot?wux8ch#iefix') format('embedded-opentype'),
+  src: url('#{$icomoon-font-path}/#{$icomoon-font-family}.eot?wux8ch');
+  src: url('#{$icomoon-font-path}/#{$icomoon-font-family}.eot?wux8ch#iefix')
+      format('embedded-opentype'),
     url('#{$icomoon-font-path}/#{$icomoon-font-family}.ttf?wux8ch') format('truetype'),
     url('#{$icomoon-font-path}/#{$icomoon-font-family}.woff?wux8ch') format('woff'),
-    url('#{$icomoon-font-path}/#{$icomoon-font-family}.svg?wux8ch##{$icomoon-font-family}') format('svg');
+    url('#{$icomoon-font-path}/#{$icomoon-font-family}.svg?wux8ch##{$icomoon-font-family}')
+      format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
 }
 
-[class^="icon-"], [class*=" icon-"] {
+[class^='icon-'],
+[class*=' icon-'] {
   /* use !important to prevent issues with browser extensions that change fonts */
   font-family: '#{$icomoon-font-family}' !important;
   speak: never;
@@ -26,81 +29,89 @@
   /* Better Font Rendering =========== */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  &.red {
+    color: #ff868e;
+  }
+  &.green {
+    color: #97eab9;
+  }
+  &.yellow {
+    color: #ffd280;
+  }
 }
 
 .icon-trash {
   &:before {
-    content: $icon-trash; 
+    content: $icon-trash;
   }
 }
 .icon-sort {
   &:before {
-    content: $icon-sort; 
+    content: $icon-sort;
   }
 }
 .icon-sort-reverse {
   &:before {
-    content: $icon-sort-reverse; 
+    content: $icon-sort-reverse;
   }
 }
 .icon-back {
   &:before {
-    content: $icon-back; 
+    content: $icon-back;
   }
 }
 .icon-close {
   &:before {
-    content: $icon-close; 
+    content: $icon-close;
   }
 }
 .icon-dislike {
   &:before {
-    content: $icon-dislike; 
+    content: $icon-dislike;
   }
 }
 .icon-dropdown {
   &:before {
-    content: $icon-dropdown; 
+    content: $icon-dropdown;
   }
 }
 .icon-error {
   &:before {
-    content: $icon-error; 
+    content: $icon-error;
   }
 }
 .icon-fav {
   &:before {
-    content: $icon-fav; 
+    content: $icon-fav;
   }
 }
 .icon-fav-filled {
   &:before {
-    content: $icon-fav-filled; 
+    content: $icon-fav-filled;
   }
 }
 .icon-like {
   &:before {
-    content: $icon-like; 
+    content: $icon-like;
   }
 }
 .icon-search {
   &:before {
-    content: $icon-search; 
+    content: $icon-search;
   }
 }
 .icon-success {
   &:before {
-    content: $icon-success; 
+    content: $icon-success;
   }
 }
 .icon-update {
   &:before {
-    content: $icon-update; 
+    content: $icon-update;
   }
 }
 .icon-upload {
   &:before {
-    content: $icon-upload; 
+    content: $icon-upload;
   }
 }
-

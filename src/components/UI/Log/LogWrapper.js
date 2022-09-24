@@ -2,15 +2,11 @@ import React from 'react';
 import clsx from 'clsx';
 
 import classes from './LogWrapper.module.scss';
-import LogItem from './LogItem';
 
-const LogWrapper = () => {
+const LogWrapper = (props) => {
   return (
     <div className={clsx(classes['log-wrapper'])}>
-      <LogItem/>
-      <LogItem/>
-      <LogItem/>
-      <LogItem/>
+      {props.children}
     </div>
   );
 };

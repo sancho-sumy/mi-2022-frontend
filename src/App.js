@@ -19,6 +19,11 @@ function App() {
   const [currentBreed, setCurrentBreed] = useState('beng');
   const [breedsImages, setBreedsImages] = useState([]);
   const [breedsList, setBreedsList] = useState([]);
+  const [favouritesList, setFavouritesList] = useState([]);
+  const [votesList, setVotesList] = useState([]);
+  const [actionLog, setActionLog] = useState([]);
+  const [favouriteLastUpdate, setFavouriteLastUpdate] = useState({});
+  const [votesLastUpdate, setVotesLastUpdate] = useState({});
 
   useEffect(() => {
     const getBreedsList = async () => {
@@ -42,6 +47,24 @@ function App() {
     getImages();
   }, [currentBreed]);
 
+  // Favourites and votes lists are loading during first app load and will be updated after adding of new element. It's made in order to have a fresh list to check if element already in the list before adding it.
+
+  useEffect(() => {
+    const getVotes = async () => {
+      const { data } = await thecatapi.get('/votes');
+      setVotesList(data);
+    };
+    getVotes();
+  }, [votesLastUpdate]);
+
+  useEffect(() => {
+    const getFavourites = async () => {
+      const { data } = await thecatapi.get('/favourites');
+      setFavouritesList(data);
+    };
+    getFavourites();
+  }, [favouriteLastUpdate]);
+
   const activeItemHandler = (item) => {
     setCurrentItem(item);
   };
@@ -64,7 +87,18 @@ function App() {
           currentBreed={currentBreed}
         >
           {currentItem === 'home' && <Home />}
-          {currentItem === 'voting' && <Voting currentItem={currentItem} />}
+          {currentItem === 'voting' && (
+            <Voting
+              currentItem={currentItem}
+              actionLog={actionLog}
+              setActionLog={setActionLog}
+              favouritesList={favouritesList}
+              votesList={votesList}
+              setFavouriteLastUpdate={setFavouriteLastUpdate}
+              setVotesLastUpdate={setVotesLastUpdate}
+              setFavouritesList={setFavouritesList}
+            />
+          )}
           {currentItem === 'breeds' && (
             <Breeds
               currentItem={currentItem}
@@ -74,9 +108,17 @@ function App() {
             />
           )}
           {currentItem === 'gallery' && <Gallery currentItem={currentItem} />}
-          {currentItem === 'favourites' && <Lists currentItem={currentItem} />}
-          {currentItem === 'likes' && <Lists currentItem={currentItem} />}
-          {currentItem === 'dislikes' && <Lists currentItem={currentItem} />}
+          {(currentItem === 'favourites' ||
+            currentItem === 'likes' ||
+            currentItem === 'dislikes') && (
+            <Lists
+              currentItem={currentItem}
+              favouritesList={favouritesList}
+              votesList={votesList}
+              setFavouritesList={setFavouritesList}
+              setVotesList={setVotesList}
+            />
+          )}
           {currentItem === 'breedsInfo' && (
             <BreedsInfo
               currentItem={currentItem}

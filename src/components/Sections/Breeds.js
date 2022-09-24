@@ -37,7 +37,7 @@ const Breeds = (props) => {
         key={item.id}
         currentItem={props.currentItem}
         btnText={item.breeds.length ? item.breeds[0].name : 'Unknown breed'}
-        btnTarget={item.breeds.length ? item.breeds[0].id : null}
+        id={item.breeds.length ? item.breeds[0].id : null}
         onButtonClick={openBreedInfoHandler}
       />
     );

@@ -26,10 +26,14 @@
     line-height: 24px;
     color: #8c8c8c;
     padding: 0 5px;
-    span {
+    .imageId {
       font-weight: 500;
       color: #1d1d1d;
       padding: 0 5px;
+    }
+    .action {
+      text-transform: capitalize;
+      padding: 0 4px;
     }
   }
   .icon {
@@ -37,8 +41,7 @@
     justify-content: center;
     align-items: center;
     span {
-    font-size: 20px;
-    color: #FF868E;
+      font-size: 20px;
     }
   }
 }

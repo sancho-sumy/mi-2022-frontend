@@ -1,16 +1,16 @@
-import clsx from 'clsx';
 import React from 'react';
+import clsx from 'clsx';
 
 import Button from './Controls/Button';
-import classes from './ImageItem.module.scss';
+import classes from './GalleryItem.module.scss';
 
-function ImageItem({ src, alt, btnText, currentItem, id, onButtonClick }) {
+const GalleryItem = ({ src, alt, btnText, currentItem, imageId, onButtonClick, btnId }) => {
   return (
     <div className={clsx(classes['image-item'])}>
       <img src={src} alt={alt} />
       <div className={clsx(classes['favourite'])}>
         <div
-          onClick={() => onButtonClick(id)}
+          onClick={() => onButtonClick(btnId, imageId)}
           className={clsx(
             currentItem !== 'breeds' && classes['btn'],
             currentItem === 'breeds' && classes['favourite-btn']
@@ -21,6 +21,6 @@ function ImageItem({ src, alt, btnText, currentItem, id, onButtonClick }) {
       </div>
     </div>
   );
-}
+};
 
-export default ImageItem;
+export default GalleryItem;

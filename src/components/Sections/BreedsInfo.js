@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import clsx from 'clsx';
 
-import PageLayout from '../Layout/PageLayout';
 import ImageFrame from '../UI/ImageFrame';
 import GalleryNavigation from '../UI/Controls/GalleryNavigation';
 
 import classes from './BreedsInfo.module.scss';
 import thecatapi from '../../apis/thecatapi';
 
-const BreedsInfo = ({ currentItem, currentBreed, breedsList }) => {
+const BreedsInfo = ({ currentBreed }) => {
   const [queryResult, setQueryResult] = useState([]);
   const [currentImage, setCurrentImage] = useState([]);
 
@@ -30,7 +29,7 @@ const BreedsInfo = ({ currentItem, currentBreed, breedsList }) => {
     setCurrentImage(queryResult[index].url);
   };
   return (
-    <PageLayout currentItem={currentItem} currentBreed={currentBreed} breedsList={breedsList}>
+    <React.Fragment>
       <ImageFrame>
         <img src={currentImage} alt={'Breed example'} />
         <GalleryNavigation
@@ -56,7 +55,7 @@ const BreedsInfo = ({ currentItem, currentBreed, breedsList }) => {
           </div>
         </div>
       </div>
-    </PageLayout>
+    </React.Fragment>
   );
 };
 export default BreedsInfo;

@@ -1,37 +1,30 @@
 import React, { useEffect } from 'react';
-import ImageList from '../UI/ImageList';
-import PageLayout from '../Layout/PageLayout';
-import ImageItem from '../UI/ImageItem';
+import GalleryList from '../UI/GalleryList';
 import GalleryFilter from '../UI/GalleryFilter';
 
 const Gallery = (props) => {
   useEffect(() => {
-    !props.imagesQueryResult.length && props.setReloadStatus(true);
+    !props.imagesList.length && props.setReloadStatus(true);
   });
 
   const onReloadPressed = () => {
     props.setReloadStatus(true);
   };
-  const imagesList = props.imagesQueryResult.map((item) => {
-    return (
-      <ImageItem
-        src={item.url}
-        alt={item.breeds.length ? item.breeds[0].description : "Cat's image"}
-        key={item.id}
-        currentItem={props.currentItem}
-        btnText={
-          <span style={{ fontSize: '20px', letterSpacing: '0' }} className="icon-fav"></span>
-        }
-        breedId={item.breeds.length ? item.breeds[0].id : null}
-      />
-    );
-  });
+
+  const votingButtonHandler = (btnId, itemId) => {
+    let imageId = props.imagesList.filter((item) => item.id === itemId)[0];
+    props.votingButtonHandler(btnId, imageId.id);
+  };
 
   return (
-    <PageLayout currentItem={props.currentItem}>
+    <React.Fragment>
       <GalleryFilter breedsList={props.breedsList} setReloadStatus={onReloadPressed} />
-      <ImageList imagesList={imagesList} />
-    </PageLayout>
+      <GalleryList
+        imagesList={props.imagesList}
+        currentItem={props.currentItem}
+        votingButtonHandler={votingButtonHandler}
+      />
+    </React.Fragment>
   );
 };
 

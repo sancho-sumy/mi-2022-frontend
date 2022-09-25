@@ -1,35 +1,19 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PageLayout from '../Layout/PageLayout';
 import ImageList from '../UI/ImageList';
-
 import ImageItem from '../UI/ImageItem';
 
-const limitItems = [
-  {
-    name: 'Limit: 5',
-    value: 5,
-  },
-  {
-    name: 'Limit: 10',
-    value: 10,
-  },
-  {
-    name: 'Limit: 15',
-    value: 15,
-  },
-  {
-    name: 'Limit: 20',
-    value: 20,
-  },
-];
-
 const Breeds = (props) => {
+  useEffect(() => {
+    !props.imagesQueryResult.length && props.setReloadStatus(true);
+  });
 
   const openBreedInfoHandler = (item) => {
-    props.openBreedInfoHandler(item)
-  }
+    props.setCurrentBreed(item);
+    props.setCurrentItem('breedsInfo');
+  };
 
-  const imagesList = props.breedsImages.map((item) => {
+  const imagesList = props.imagesQueryResult.map((item) => {
     return (
       <ImageItem
         src={item.url}
@@ -44,7 +28,7 @@ const Breeds = (props) => {
   });
 
   return (
-    <PageLayout currentItem={props.currentItem} limitItems={limitItems} breedsList={props.breedsList}>
+    <PageLayout currentItem={props.currentItem} breedsList={props.breedsList}>
       <ImageList imagesList={imagesList} currentItem={props.currentItem} />
     </PageLayout>
   );

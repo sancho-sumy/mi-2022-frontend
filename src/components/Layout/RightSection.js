@@ -4,7 +4,7 @@ import classes from './RightSection.module.scss';
 
 const RightSection = (props) => {
   const activeItemHandler = (item) => {
-    props.activeItem(item);
+    props.setActiveItem(item);
   };
 
   return (

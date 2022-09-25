@@ -11,6 +11,8 @@ const PageLayout = (props) => {
         limitItems={props.limitItems}
         breedsList={props.breedsList}
         currentBreed={props.currentBreed}
+        reloadStatus={props.reloadStatus}
+        setReloadStatus={props.setReloadStatus}
       />
       <PageWrapper>{props.children}</PageWrapper>
     </div>

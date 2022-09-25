@@ -1,23 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import PageLayout from '../Layout/PageLayout';
 
-import thecatapi from '../../apis/thecatapi';
+import PageLayout from '../Layout/PageLayout';
 import ImageFrame from '../UI/ImageFrame';
 import VotingPanel from '../UI/VotingPanel';
 import LogWrapper from '../UI/Log/LogWrapper';
 import LogItem from '../UI/Log/LogItem';
 import MessageItem from '../UI/MessageItem';
 
-const Voting = ({
-  currentItem,
-  actionLog,
-  setActionLog,
-  favouritesList,
-  votesList,
-  setVotesLastUpdate,
-  setFavouriteLastUpdate,
-  setFavouritesList,
-}) => {
+import thecatapi from '../../apis/thecatapi';
+
+const Voting = (props) => {
   const [image, setImage] = useState([]);
   const [imageLastLoad, setImageLastLoad] = useState({});
   const [favouriteImage, setFavouriteImage] = useState([]);
@@ -27,6 +19,7 @@ const Voting = ({
     const getImage = async () => {
       const { data } = await thecatapi.get('/images/search');
       setImage(data[0]);
+      // Reset FavouriteImage and VotedImage on page and new image loading.
       setFavouriteImage([]);
       setVotedImage([]);
     };
@@ -34,15 +27,17 @@ const Voting = ({
   }, [imageLastLoad]);
 
   useEffect(() => {
+    // Check if the image already in Favourites. If true save object to FavouriteImage.
     const favoritesCheck = () => {
-      setFavouriteImage(favouritesList.find((item) => item.image_id === image.id));
+      setFavouriteImage(props.favouritesList.find((item) => item.image_id === image.id));
     };
+    // Check if the image already in Votes. If true save object to VotedImage.
     const votesCheck = () => {
-      setVotedImage(votesList.find((item) => item.image_id === image.id));
+      setVotedImage(props.votesList.find((item) => item.image_id === image.id));
     };
     favoritesCheck();
     votesCheck();
-  }, [favouritesList, votesList, image.id]);
+  }, [props.favouritesList, props.votesList, image.id]);
 
   //  Voting algorithm:
   //  Favourites: when the button pressed => check if the image is already in Favourites => if true add to Favourites / if false remove from Favourites => don't load new picture.
@@ -62,10 +57,12 @@ const Voting = ({
         action = 'add';
       } else {
         await thecatapi.delete(`/favourites/${favouriteImage.id}`);
-        setFavouritesList(favouritesList.filter((item) => item.id !== favouriteImage.id));
+        props.setFavouritesList(
+          props.favouritesList.filter((item) => item.id !== favouriteImage.id)
+        );
         action = 'remove';
       }
-      setFavouriteLastUpdate(new Date());
+      props.setFavouriteLastUpdate(new Date());
     } else {
       if (!votedImage) {
         await thecatapi.post('/votes', {
@@ -73,24 +70,26 @@ const Voting = ({
           value: buttonId === 'like' ? 1 : 0,
         });
         action = 'add';
-        setVotesLastUpdate(new Date());
+        props.setVotesLastUpdate(new Date());
       } else {
         console.log('Already voted');
         return;
       }
     }
-    const newLog = [...actionLog];
+    // Add a new record to log.
+    const newLog = [...props.actionLog];
     newLog.push({
       imageId: image.id,
       action: action,
       section: buttonId === 'favourite' ? 'favourite' : buttonId === 'like' ? 'like' : 'dislike',
       time: new Date(),
     });
-    setActionLog(newLog);
+    props.setActionLog(newLog);
+    // Trigger to load new image.
     buttonId !== 'favourite' && setImageLastLoad(new Date());
   };
 
-  const logList = actionLog
+  const logList = props.actionLog
     .map((item) => (
       <LogItem
         time={item.time.toTimeString().substring(0, 5)}
@@ -102,7 +101,7 @@ const Voting = ({
     ))
     .reverse();
   return (
-    <PageLayout currentItem={currentItem}>
+    <PageLayout currentItem={props.currentItem}>
       <ImageFrame>
         <img
           src={image.url}
@@ -112,7 +111,7 @@ const Voting = ({
         <VotingPanel onVotingButtonClick={votingButtonHandler} favouriteImage={favouriteImage} />
       </ImageFrame>
       <LogWrapper>
-        {!actionLog.length && <MessageItem>No item found</MessageItem>}
+        {!props.actionLog.length && <MessageItem>No item found</MessageItem>}
         {logList.slice(0, 4)}
       </LogWrapper>
     </PageLayout>

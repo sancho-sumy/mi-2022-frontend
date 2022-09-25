@@ -13,17 +13,25 @@ import Lists from './components/Sections/Lists';
 
 import './App.scss';
 import thecatapi from './apis/thecatapi';
+import options from './assets/options';
 
 function App() {
   const [currentItem, setCurrentItem] = useState('home');
   const [currentBreed, setCurrentBreed] = useState('beng');
-  const [breedsImages, setBreedsImages] = useState([]);
+  const [queryParams, setQueryParams] = useState(options.defaultRequest);
+  const [breedsQueryResult, setBreedsQueryResult] = useState([]);
+  const [galleryQueryResult, setGalleryQueryResult] = useState([]);
   const [breedsList, setBreedsList] = useState([]);
   const [favouritesList, setFavouritesList] = useState([]);
   const [votesList, setVotesList] = useState([]);
   const [actionLog, setActionLog] = useState([]);
   const [favouriteLastUpdate, setFavouriteLastUpdate] = useState({});
   const [votesLastUpdate, setVotesLastUpdate] = useState({});
+  const [reloadStatus, setReloadStatus] = useState(false);
+  //! To fix buttons!
+  //! Fix - do not open details when breed is unknown
+
+  console.log(reloadStatus);
 
   useEffect(() => {
     const getBreedsList = async () => {
@@ -34,18 +42,19 @@ function App() {
   }, []);
 
   useEffect(() => {
+    if ((currentItem !== 'breeds' || currentItem !== 'gallery') && !reloadStatus) {
+      return;
+    }
     const getImages = async () => {
       const { data } = await thecatapi.get('/images/search', {
-        params: {
-          breed_ids: currentBreed,
-          limit: 15,
-          order: 'Desc',
-        },
+        params: queryParams,
       });
-      setBreedsImages(data);
+      currentItem === 'breeds' && setBreedsQueryResult(data);
+      currentItem === 'gallery' && setGalleryQueryResult(data);
+      setReloadStatus(false);
     };
     getImages();
-  }, [currentBreed]);
+  }, [reloadStatus, queryParams, currentItem]);
 
   // Favourites and votes lists are loading during first app load and will be updated after adding of new element. It's made in order to have a fresh list to check if element already in the list before adding it.
 
@@ -65,25 +74,16 @@ function App() {
     getFavourites();
   }, [favouriteLastUpdate]);
 
-  const activeItemHandler = (item) => {
-    setCurrentItem(item);
-  };
-
-  const openBreedInfoHandler = (item) => {
-    setCurrentBreed(item);
-    setCurrentItem('breedsInfo');
-  };
-
   return (
     <main className="container">
       <div className="wrapper">
         <LeftSection>
           <Welcome />
-          <Menu currentItem={currentItem} activeItem={activeItemHandler} />
+          <Menu currentItem={currentItem} activeItem={setCurrentItem} />
         </LeftSection>
         <RightSection
           currentItem={currentItem}
-          activeItem={activeItemHandler}
+          setActiveItem={setCurrentItem}
           currentBreed={currentBreed}
         >
           {currentItem === 'home' && <Home />}
@@ -101,13 +101,23 @@ function App() {
           )}
           {currentItem === 'breeds' && (
             <Breeds
+              setCurrentItem={setCurrentItem}
+              setCurrentBreed={setCurrentBreed}
               currentItem={currentItem}
-              openBreedInfoHandler={openBreedInfoHandler}
-              breedsImages={breedsImages}
+              imagesQueryResult={breedsQueryResult}
               breedsList={breedsList}
+              setReloadStatus={setReloadStatus}
             />
           )}
-          {currentItem === 'gallery' && <Gallery currentItem={currentItem} />}
+          {currentItem === 'gallery' && (
+            <Gallery
+              currentItem={currentItem}
+              breedsList={breedsList}
+              imagesQueryResult={galleryQueryResult}
+              reloadStatus={reloadStatus}
+              setReloadStatus={setReloadStatus}
+            />
+          )}
           {(currentItem === 'favourites' ||
             currentItem === 'likes' ||
             currentItem === 'dislikes') && (

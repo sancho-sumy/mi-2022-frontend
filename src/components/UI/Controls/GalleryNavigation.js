@@ -11,15 +11,12 @@ const GalleryNavigation = (props) => {
     setCurrentItem(itemIndex);
   };
 
-  console.log(currentItem);
-
   const itemsList = props.queryResult.map((_, index) => {
     return (
       <div
         key={index}
         className={clsx(classes.item, index === currentItem && classes.active)}
         onClick={() => onItemClick(index)}
-        itemIndex={index}
       >
         {props.children}
       </div>

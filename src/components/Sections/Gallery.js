@@ -1,43 +1,35 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import ImageList from '../UI/ImageList';
 import PageLayout from '../Layout/PageLayout';
 import ImageItem from '../UI/ImageItem';
-
-import thecatapi from '../../apis/thecatapi';
 import GalleryFilter from '../UI/GalleryFilter';
 
-const Gallery = ({ currentItem }) => {
-  const [queryResult, setQueryResult] = useState([]);
-
+const Gallery = (props) => {
   useEffect(() => {
-    const getImages = async () => {
-      const { data } = await thecatapi.get('/images/search', {
-        params: {
-          limit: 15,
-        },
-      });
-      setQueryResult(data);
-      console.log(data);
-    };
-    getImages();
-  }, []);
+    !props.imagesQueryResult.length && props.setReloadStatus(true);
+  });
 
-  const imagesList = queryResult.map((item) => {
+  const onReloadPressed = () => {
+    props.setReloadStatus(true);
+  };
+  const imagesList = props.imagesQueryResult.map((item) => {
     return (
       <ImageItem
         src={item.url}
         alt={item.breeds.length ? item.breeds[0].description : "Cat's image"}
         key={item.id}
-        currentItem={currentItem}
-        btnText={<span style={{ fontSize: '20px', letterSpacing: '0'}} className="icon-fav"></span>}
+        currentItem={props.currentItem}
+        btnText={
+          <span style={{ fontSize: '20px', letterSpacing: '0' }} className="icon-fav"></span>
+        }
         breedId={item.breeds.length ? item.breeds[0].id : null}
       />
     );
   });
 
   return (
-    <PageLayout currentItem={currentItem}>
-      <GalleryFilter />
+    <PageLayout currentItem={props.currentItem}>
+      <GalleryFilter breedsList={props.breedsList} setReloadStatus={onReloadPressed} />
       <ImageList imagesList={imagesList} />
     </PageLayout>
   );

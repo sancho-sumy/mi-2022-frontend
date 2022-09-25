@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import clsx from 'clsx';
 
 import Button from '../UI/Controls/Button';
 import Select from '../UI/Controls/Select';
 
 import sectionsList from '../../assets/sectionsList';
+import options from '../../assets/options';
 import classes from './PageHeader.module.scss';
 
 const UploadBlock = () => {
@@ -19,24 +20,18 @@ const UploadBlock = () => {
 };
 
 const ViewSettingsBlock = ({ breedsList, limitItems }) => {
-  const [currentBreed, setCurrentBreed] = useState('2');
-
-  const onBreedsSelection = () => {
-    setCurrentBreed('selectedItem');
-  };
-
   const breedsItemsList = breedsList.map((item) => {
     return (
-      <option onChange={() => onBreedsSelection('selectedItem')} key={item.id} value={item.value}>
+      <option key={item.id} value={item.value}>
         {item.name}
       </option>
     );
   });
 
-  const limitItemsList = limitItems.map((item) => {
+  const limitItemsList = options.limits.map((item) => {
     return (
-      <option key={item.name} value={item.value}>
-        {item.name}
+      <option key={item.value} value={item.value}>
+        {item.nameShort}
       </option>
     );
   });
@@ -46,14 +41,14 @@ const ViewSettingsBlock = ({ breedsList, limitItems }) => {
         <Select>{breedsItemsList}</Select>
       </div>
       <div className={clsx(classes.btn, classes.btn_list)}>
-        <Select>{limitItemsList}</Select>{' '}
+        <Select>{limitItemsList}</Select>
       </div>
       <div className={clsx(classes.btn, classes.btn_sort)}>
         <Button design="gray">
           <span style={{ fontSize: '20px' }} className="icon-sort"></span>
         </Button>
       </div>
-      <div className={clsx(classes.btn, classes.btn_sort)}>
+      <div onClick={() => console.log('clicked')} className={clsx(classes.btn, classes.btn_sort)}>
         <Button design="gray">
           <span style={{ fontSize: '20px' }} className="icon-sort-reverse"></span>
         </Button>
@@ -93,7 +88,7 @@ const LabelElement = ({ label, design, currentItem }) => {
   );
 };
 
-const PageHeader = ({ currentItem, breedsList, limitItems, currentBreed }) => {
+const PageHeader = ({ currentItem, breedsList, currentBreed }) => {
   return (
     <div className={classes['page-header']}>
       <nav className={classes['navigation-block']}>
@@ -115,9 +110,7 @@ const PageHeader = ({ currentItem, breedsList, limitItems, currentBreed }) => {
         )}
       </nav>
       {currentItem === 'gallery' && <UploadBlock />}
-      {currentItem === 'breeds' && (
-        <ViewSettingsBlock limitItems={limitItems} breedsList={breedsList} />
-      )}
+      {currentItem === 'breeds' && <ViewSettingsBlock breedsList={breedsList} />}
     </div>
   );
 };

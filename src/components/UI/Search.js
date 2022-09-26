@@ -2,6 +2,10 @@ import React from 'react';
 import Button from './Controls/Button';
 import classes from './Search.module.scss';
 
+const onClickTemp = () => {
+  console.log("Oops, that button doesn't seem to be working yet!");
+};
+
 const Search = () => {
   return (
     <div className={classes.search}>
@@ -12,7 +16,7 @@ const Search = () => {
       />
       <span>
         <div className={classes.btn}>
-          <Button design="light">
+          <Button onButtonClick={onClickTemp} design="light">
             <span style={{ fontSize: '20px' }} className="icon-search"></span>
           </Button>
         </div>

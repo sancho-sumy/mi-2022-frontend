@@ -9,46 +9,58 @@
   font-size: 12px;
   line-height: 16px;
   letter-spacing: 2px;
-  background: #fff;
-  color: #FF868E;
   text-transform: uppercase;
+  color: #ff868e;
   cursor: pointer;
   padding: 0 15px;
+  &.white {
+    background: #fff;
+    &:hover {
+      background: #fbe0dc;
+    }
+    &.disabled {
+      cursor: default;
+      &:hover {
+        background: #fff;
+      }
+    }
+  }
   &.active {
-    background: #FF868E;
+    background: #ff868e;
     color: #fff;
   }
   &.light {
-    background: #FBE0DC;
+    background: #fbe0dc;
     &:hover {
-      background: #FF868E;
+      background: #ff868e;
       color: #fff;
+    }
+    &.disabled {
+      cursor: default;
+      background: #fbe0dc;
+      color: #ff868e;
     }
   }
   &.dark {
-    background: #FF868E;
+    background: #ff868e;
     color: #fff;
+    &.disabled {
+      cursor: default;
+    }
   }
   &.gray {
-    background: #F8F8F7;
-    color: #8C8C8C;
+    background: #f8f8f7;
+    color: #8c8c8c;
     &:hover {
-      background: #F8F8F7;
-      border: 2px solid #FBE0DC;
-      color: #FF868E;
+      background: #f8f8f7;
+      border: 2px solid #fbe0dc;
+      color: #ff868e;
     }
   }
   &.mute {
     cursor: default;
     &:hover {
-      background: #FF868E;
+      background: #ff868e;
     }
-  }
-  &:hover {
-    background: #FBE0DC;
-  }
-  &:active {
-    background: #FF868E;
-    color: #fff;
   }
 }

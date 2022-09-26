@@ -4,6 +4,10 @@ import PageHeader from './PageHeader';
 import classes from './PageLayout.module.scss';
 
 const PageLayout = (props) => {
+  const activeItemHandler = (btnId) => {
+    props.setActiveItem(btnId);
+  };
+
   return (
     <div className={classes['page-layout']}>
       <PageHeader
@@ -13,6 +17,7 @@ const PageLayout = (props) => {
         currentBreed={props.currentBreed}
         reloadStatus={props.reloadStatus}
         setReloadStatus={props.setReloadStatus}
+        setActiveItem={activeItemHandler}
       />
       <PageWrapper>{props.children}</PageWrapper>
     </div>

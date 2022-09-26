@@ -23,6 +23,7 @@ const Gallery = (props) => {
         imagesList={props.imagesList}
         currentItem={props.currentItem}
         votingButtonHandler={votingButtonHandler}
+        favouritesList={props.favouritesList}
       />
     </React.Fragment>
   );

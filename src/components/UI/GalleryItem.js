@@ -5,18 +5,21 @@ import Button from './Controls/Button';
 import classes from './GalleryItem.module.scss';
 
 const GalleryItem = ({ src, alt, btnText, currentItem, imageId, onButtonClick, btnId }) => {
+  const buttonClickHandler = () => onButtonClick(btnId, imageId);
+
   return (
     <div className={clsx(classes['image-item'])}>
       <img src={src} alt={alt} />
       <div className={clsx(classes['favourite'])}>
         <div
-          onClick={() => onButtonClick(btnId, imageId)}
           className={clsx(
-            currentItem !== 'breeds' && classes['btn'],
-            currentItem === 'breeds' && classes['favourite-btn']
+            currentItem !== 'breeds' && classes['favourite-btn'],
+            currentItem === 'breeds' && classes['info-btn']
           )}
         >
-          <Button>{btnText}</Button>
+          <Button onButtonClick={buttonClickHandler} isDisabled={!!!btnId} design="white">
+            {btnText}
+          </Button>
         </div>
       </div>
     </div>

@@ -3,12 +3,17 @@ import React from 'react';
 import GalleryItem from './GalleryItem';
 import GalleryWrapper from './GalleryWrapper';
 
-const GalleryList = ({ currentItem, imagesList, openBreedInfoHandler, votingButtonHandler }) => {
+const GalleryList = ({
+  currentItem,
+  imagesList,
+  openBreedInfoHandler,
+  votingButtonHandler,
+  favouritesList,
+}) => {
   const deleteItemHandler = (btnId, itemId) => {
     let imageId = imagesList.filter((item) => item.id === itemId)[0];
     votingButtonHandler(btnId, imageId.image_id);
   };
-
   const imageItems = () => {
     let list = [];
     if (currentItem === 'gallery') {
@@ -20,7 +25,13 @@ const GalleryList = ({ currentItem, imagesList, openBreedInfoHandler, votingButt
             key={item.id}
             imageId={item.id}
             btnId={'favourite'}
-            btnText={<span style={{ fontSize: '20px' }} className="icon-fav"></span>}
+            btnText={
+              !!favouritesList.find((favItem) => favItem.image_id === item.id) ? (
+                <span style={{ fontSize: '20px' }} className="icon-fav-filled"></span>
+              ) : (
+                <span style={{ fontSize: '20px' }} className="icon-fav"></span>
+              )
+            }
             onButtonClick={votingButtonHandler}
           />
         );

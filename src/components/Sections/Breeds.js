@@ -7,8 +7,10 @@ const Breeds = (props) => {
   });
 
   const openBreedInfoHandler = (item) => {
-    props.setCurrentBreed(item);
-    props.setCurrentItem('breedsInfo');
+    if (item) {
+      props.setCurrentBreed(item);
+      props.setCurrentItem('breedsInfo');
+    }
   };
 
   return (

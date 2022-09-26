@@ -14,8 +14,8 @@ const MenuItem = ({ btnText, image, background, link, currentItem, activeItem })
       <div className={`${classes.card} ${classes.breeds}`} style={{ background: `${background}` }}>
         <img className={classes['card-img']} src={image} alt="Breeds" />
       </div>
-      <div onClick={onButtonClick} className={classes.btn}>
-        <Button link={link} isActive={isActive}>
+      <div  className={classes.btn}>
+        <Button onButtonClick={onButtonClick} link={link} isActive={isActive} btnId={btnText} design="white">
           {btnText}
         </Button>
       </div>

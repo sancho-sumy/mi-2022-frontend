@@ -34,8 +34,6 @@ function App() {
   //! To fix buttons!
   //! Fix - do not open details when breed is unknown
 
-  console.log(setQueryParams);
-
   useEffect(() => {
     const getBreedsList = async () => {
       const { data } = await thecatapi.get('/breeds');
@@ -164,6 +162,7 @@ function App() {
               currentItem={currentItem}
               currentBreed={currentBreed}
               breedsList={breedsList}
+              setActiveItem={setCurrentItem}
             >
               {currentItem === 'voting' && (
                 <Voting
@@ -194,6 +193,7 @@ function App() {
                   votingButtonHandler={votingButtonHandler}
                   setCurrentImage={setCurrentImage}
                   setImageLastLoad={setImageLastLoad}
+                  favouritesList={favouritesList}
                 />
               )}
               {(currentItem === 'favourites' ||

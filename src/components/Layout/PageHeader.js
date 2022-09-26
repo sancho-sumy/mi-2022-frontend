@@ -8,10 +8,14 @@ import sectionsList from '../../assets/sectionsList';
 import options from '../../assets/options';
 import classes from './PageHeader.module.scss';
 
+const onClickTemp = () => {
+  console.log("Oops, that button doesn't seem to be working yet!");
+};
+
 const UploadBlock = () => {
   return (
     <div className={clsx(classes.btn, classes.btn_upload)}>
-      <Button design="light">
+      <Button onButtonClick={onClickTemp} design="light" btnId={'upload'}>
         <span style={{ fontSize: '16px' }} className="icon-upload"></span>
         <span style={{ marginLeft: '10px' }}>Upload</span>
       </Button>
@@ -20,6 +24,9 @@ const UploadBlock = () => {
 };
 
 const ViewSettingsBlock = ({ breedsList, limitItems }) => {
+  const buttonClickHandler = (btnId) => {
+    console.log(btnId);
+  };
   const breedsItemsList = breedsList.map((item) => {
     return (
       <option key={item.id} value={item.value}>
@@ -44,12 +51,12 @@ const ViewSettingsBlock = ({ breedsList, limitItems }) => {
         <Select>{limitItemsList}</Select>
       </div>
       <div className={clsx(classes.btn, classes.btn_sort)}>
-        <Button design="gray">
+        <Button onButtonClick={buttonClickHandler} btnId={'desc'} design="gray">
           <span style={{ fontSize: '20px' }} className="icon-sort"></span>
         </Button>
       </div>
-      <div onClick={() => console.log('clicked')} className={clsx(classes.btn, classes.btn_sort)}>
-        <Button design="gray">
+      <div className={clsx(classes.btn, classes.btn_sort)}>
+        <Button onButtonClick={buttonClickHandler} btnId={'asc'} design="gray">
           <span style={{ fontSize: '20px' }} className="icon-sort-reverse"></span>
         </Button>
       </div>
@@ -59,13 +66,32 @@ const ViewSettingsBlock = ({ breedsList, limitItems }) => {
 
 //! Temporary! Label elements should be refactored!
 
-const LabelElement = ({ label, design, currentItem }) => {
+const LabelElement = ({ label, design, currentItem, setCurrentItem }) => {
+  const buttonClickHandler = (btnId) => {
+    if (currentItem !== 'breedsInfo') {
+      return
+    }
+    setCurrentItem(btnId);
+  };
+
   const SectionNameLabel = () => {
     return (
       <div className={clsx(classes.btn, classes.btn_label)}>
-        <Button design={currentItem === 'breedsInfo' ? 'light' : 'dark'}>
-          <span style={{ fontSize: '20px' }}>{label}</span>
-        </Button>
+        {currentItem === 'breedsInfo' && (
+          <Button
+            onButtonClick={buttonClickHandler}
+            isDisabled={false}
+            design={'light'}
+            btnId={'breeds'}
+          >
+            <span style={{ fontSize: '20px' }}>{label}</span>
+          </Button>
+        )}
+        {currentItem !== 'breedsInfo' && (
+          <Button onButtonClick={(buttonClickHandler)} isDisabled={true} design={'dark'}>
+            <span style={{ fontSize: '20px' }}>{label}</span>
+          </Button>
+        )}
       </div>
     );
   };
@@ -73,7 +99,7 @@ const LabelElement = ({ label, design, currentItem }) => {
   const BreedIdLabel = () => {
     return (
       <div className={clsx(classes.btn, classes['btn_label-breed-id'])}>
-        <Button design="dark" option="mute">
+        <Button isDisabled={true} design="dark" option="mute">
           <span style={{ fontSize: '20px' }}>{label}</span>
         </Button>
       </div>
@@ -88,12 +114,16 @@ const LabelElement = ({ label, design, currentItem }) => {
   );
 };
 
-const PageHeader = ({ currentItem, breedsList, currentBreed }) => {
+const PageHeader = ({ currentItem, breedsList, currentBreed, setActiveItem }) => {
+  const activeItemHandler = (btnId) => {
+    setActiveItem(btnId);
+  };
+
   return (
     <div className={classes['page-header']}>
       <nav className={classes['navigation-block']}>
         <div className={clsx(classes.btn, classes.btn_prev)}>
-          <Button design="light">
+          <Button onButtonClick={onClickTemp} design="light" btnId="backward">
             <span style={{ fontSize: '20px' }} className="icon-back"></span>
           </Button>
         </div>
@@ -101,6 +131,7 @@ const PageHeader = ({ currentItem, breedsList, currentBreed }) => {
           label={sectionsList.filter((item) => item.name === currentItem)[0]?.label_en}
           design={'sectionName'}
           currentItem={currentItem}
+          setCurrentItem={activeItemHandler}
         />
         {currentItem === 'breedsInfo' && (
           <LabelElement

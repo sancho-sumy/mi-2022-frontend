@@ -63,7 +63,7 @@ function GalleryFilter({ breedsList, setReloadStatus }) {
         <div className={clsx(classes.double)}>
           <Select>{limitItemsList}</Select>
           <div onClick={onReloadPressed}>
-            <Button>
+            <Button onButtonClick={onReloadPressed} btnId={'reload'} design='white'>
               <span
                 style={{ fontSize: '20px', letterSpacing: '0' }}
                 className={'icon-update'}

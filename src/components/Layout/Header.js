@@ -6,20 +6,25 @@ import sectionsList from '../../assets/sectionsList';
 import classes from './Header.module.scss';
 
 const Header = ({ activeItem, currentItem }) => {
+  const onButtonClick = (name) => {
+    activeItem(name);
+  };
+
   const itemsList = sectionsList.map(
     (item) =>
       item.location === 'header' && (
-        <div onClick={() => onButtonClick(item.name)} className={classes.btn} key={item.name}>
-          <Button isActive={currentItem === item.name && 'active'}>
+        <div className={classes.btn} key={item.name}>
+          <Button
+            onButtonClick={onButtonClick}
+            btnId={item.name}
+            isActive={currentItem === item.name && 'active'}
+            design="white"
+          >
             <span style={{ fontSize: '30px' }} className={item.image}></span>
           </Button>
         </div>
       )
   );
-
-  const onButtonClick = (name) => {
-    activeItem(name);
-  };
 
   return (
     <header className={classes.header}>

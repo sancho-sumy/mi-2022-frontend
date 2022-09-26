@@ -33,7 +33,7 @@ const Voting = ({ currentImage, actionLog, favouritesList, votingButtonHandler }
         />
         <VotingPanel
           onVotingButtonClick={votingButtonsHandler}
-          favouriteImage={favouritesList.find((item) => item.image_id === currentImage)}
+          favouriteImage={favouritesList.find((item) => item.image_id === currentImage.id)}
         />
       </ImageFrame>
       <LogWrapper>

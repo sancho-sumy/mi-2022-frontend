@@ -23,18 +23,25 @@ const UploadBlock = () => {
   );
 };
 
-const ViewSettingsBlock = ({ breedsList, limitItems }) => {
-  const buttonClickHandler = (btnId) => {
-    console.log(btnId);
+const ViewSettingsBlock = ({ breedsList, setBreedsQueryParams }) => {
+  const filterHandler = (value, optionId) => {
+    if (optionId === 'breedId') {
+      options.breedsRequest.breed_ids = value;
+    } else if (optionId === 'limit') {
+      options.breedsRequest.limit = value;
+    } else if (optionId === 'order') {
+      options.breedsRequest.order = value;
+    }
+    setBreedsQueryParams(options.breedsRequest);
   };
-  const breedsItemsList = breedsList.map((item) => {
+
+  const breedsItemsList = [...options.breeds, ...breedsList].map((item) => {
     return (
-      <option key={item.id} value={item.value}>
+      <option key={Math.random()} value={item.id}>
         {item.name}
       </option>
     );
   });
-
   const limitItemsList = options.limits.map((item) => {
     return (
       <option key={item.value} value={item.value}>
@@ -45,18 +52,30 @@ const ViewSettingsBlock = ({ breedsList, limitItems }) => {
   return (
     <div className={classes['view-settings-block']}>
       <div className={clsx(classes.btn, classes.btn_list)}>
-        <Select>{breedsItemsList}</Select>
+        <Select
+          filterHandler={filterHandler}
+          optionId={'breedId'}
+          value={options.breedsRequest.breed_ids}
+        >
+          {breedsItemsList}
+        </Select>
       </div>
       <div className={clsx(classes.btn, classes.btn_list)}>
-        <Select>{limitItemsList}</Select>
+        <Select
+          filterHandler={filterHandler}
+          optionId={'limit'}
+          value={options.breedsRequest.limit}
+        >
+          {limitItemsList}
+        </Select>
       </div>
       <div className={clsx(classes.btn, classes.btn_sort)}>
-        <Button onButtonClick={buttonClickHandler} btnId={'desc'} design="gray">
+        <Button onButtonClick={filterHandler} btnId={'desc'} optionId={'order'} design="gray">
           <span style={{ fontSize: '20px' }} className="icon-sort"></span>
         </Button>
       </div>
       <div className={clsx(classes.btn, classes.btn_sort)}>
-        <Button onButtonClick={buttonClickHandler} btnId={'asc'} design="gray">
+        <Button onButtonClick={filterHandler} btnId={'asc'} optionId={'order'} design="gray">
           <span style={{ fontSize: '20px' }} className="icon-sort-reverse"></span>
         </Button>
       </div>
@@ -69,7 +88,7 @@ const ViewSettingsBlock = ({ breedsList, limitItems }) => {
 const LabelElement = ({ label, design, currentItem, setCurrentItem }) => {
   const buttonClickHandler = (btnId) => {
     if (currentItem !== 'breedsInfo') {
-      return
+      return;
     }
     setCurrentItem(btnId);
   };
@@ -88,7 +107,7 @@ const LabelElement = ({ label, design, currentItem, setCurrentItem }) => {
           </Button>
         )}
         {currentItem !== 'breedsInfo' && (
-          <Button onButtonClick={(buttonClickHandler)} isDisabled={true} design={'dark'}>
+          <Button onButtonClick={buttonClickHandler} isDisabled={true} design={'dark'}>
             <span style={{ fontSize: '20px' }}>{label}</span>
           </Button>
         )}
@@ -99,7 +118,7 @@ const LabelElement = ({ label, design, currentItem, setCurrentItem }) => {
   const BreedIdLabel = () => {
     return (
       <div className={clsx(classes.btn, classes['btn_label-breed-id'])}>
-        <Button isDisabled={true} design="dark" option="mute">
+        <Button isDisabled={true} design="dark">
           <span style={{ fontSize: '20px' }}>{label}</span>
         </Button>
       </div>
@@ -114,9 +133,19 @@ const LabelElement = ({ label, design, currentItem, setCurrentItem }) => {
   );
 };
 
-const PageHeader = ({ currentItem, breedsList, currentBreed, setActiveItem }) => {
+const PageHeader = ({
+  currentItem,
+  breedsList,
+  currentBreed,
+  setActiveItem,
+  setBreedsQueryParams,
+}) => {
   const activeItemHandler = (btnId) => {
     setActiveItem(btnId);
+  };
+
+  const breedsQueryParamsHandler = (query) => {
+    setBreedsQueryParams(query);
   };
 
   return (
@@ -140,8 +169,13 @@ const PageHeader = ({ currentItem, breedsList, currentBreed, setActiveItem }) =>
           />
         )}
       </nav>
-      {currentItem === 'gallery' && <UploadBlock />}
-      {currentItem === 'breeds' && <ViewSettingsBlock breedsList={breedsList} />}
+      {/* {currentItem === 'gallery' && <UploadBlock />} */}
+      {currentItem === 'breeds' && (
+        <ViewSettingsBlock
+          breedsList={breedsList}
+          setBreedsQueryParams={breedsQueryParamsHandler}
+        />
+      )}
     </div>
   );
 };

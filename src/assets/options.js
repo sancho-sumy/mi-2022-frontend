@@ -49,11 +49,20 @@ const options = {
       value: 'gif',
     },
   ],
+  breeds: [
+    {
+      name: 'All breeds',
+      value: '',
+    },
+  ],
   defaultRequest: {
     limit: 5,
-    mime_types: '',
-    order: '',
-    breed_ids: '',
+  },
+  breedsRequest: {
+    limit: 5,
+  },
+  galleryRequest: {
+    limit: 5,
   },
 };
 

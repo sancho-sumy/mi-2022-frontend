@@ -1,6 +1,6 @@
 .gallery-wrapper {
   display: grid;
-  grid: repeat(3, minmax(auto, 140px)) / repeat(3, 200px);
+  grid: repeat(2, minmax(auto, 140px)) / repeat(3, 200px);
   grid-auto-rows: minmax(auto, 140px);
   gap: 20px;
   & > div {

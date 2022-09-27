@@ -3,7 +3,7 @@ import GalleryList from '../UI/GalleryList';
 
 const Breeds = (props) => {
   useEffect(() => {
-    !props.imagesList.length && props.setReloadStatus(true);
+    !props.imagesList.length && props.setBreedsReloadStatus(true);
   });
 
   const openBreedInfoHandler = (item) => {

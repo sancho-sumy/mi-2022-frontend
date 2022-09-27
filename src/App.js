@@ -21,18 +21,18 @@ function App() {
   const [currentBreed, setCurrentBreed] = useState('beng');
   const [currentImage, setCurrentImage] = useState([]);
   const [imageLastLoad, setImageLastLoad] = useState({});
-  const [queryParams, setQueryParams] = useState(options.defaultRequest);
+  const [breedsQueryParams, setBreedsQueryParams] = useState(options.defaultRequest);
   const [breedsQueryResult, setBreedsQueryResult] = useState([]);
+  const [breedsReloadStatus, setBreedsReloadStatus] = useState(false)
+  const [galleryQueryParams, setGalleryQueryParams] = useState(options.defaultRequest);
   const [galleryQueryResult, setGalleryQueryResult] = useState([]);
+  const [galleryReloadStatus, setGalleryReloadStatus] = useState(false);
   const [breedsList, setBreedsList] = useState([]);
   const [favouritesList, setFavouritesList] = useState([]);
   const [votesList, setVotesList] = useState([]);
   const [actionLog, setActionLog] = useState([]);
   const [favouritesLastUpdate, setFavouritesLastUpdate] = useState({});
   const [votesLastUpdate, setVotesLastUpdate] = useState({});
-  const [reloadStatus, setReloadStatus] = useState(false);
-  //! To fix buttons!
-  //! Fix - do not open details when breed is unknown
 
   useEffect(() => {
     const getBreedsList = async () => {
@@ -43,19 +43,32 @@ function App() {
   }, []);
 
   useEffect(() => {
-    if ((currentItem !== 'breeds' || currentItem !== 'gallery') && !reloadStatus) {
+    if ((currentItem !== 'breeds' || currentItem !== 'gallery') && !breedsReloadStatus) {
       return;
     }
     const getImages = async () => {
       const { data } = await thecatapi.get('/images/search', {
-        params: queryParams,
+        params: breedsQueryParams,
       });
-      currentItem === 'breeds' && setBreedsQueryResult(data);
-      currentItem === 'gallery' && setGalleryQueryResult(data);
-      setReloadStatus(false);
+      setBreedsQueryResult(data);
+      setBreedsReloadStatus(false);
     };
     getImages();
-  }, [reloadStatus, queryParams, currentItem]);
+  }, [breedsReloadStatus, breedsQueryParams, currentItem]);
+
+  useEffect(() => {
+    if ((currentItem !== 'breeds' || currentItem !== 'gallery') && !galleryReloadStatus) {
+      return;
+    }
+    const getImages = async () => {
+      const { data } = await thecatapi.get('/images/search', {
+        params: galleryQueryParams,
+      });
+      setGalleryQueryResult(data);
+      setGalleryReloadStatus(false);
+    };
+    getImages();
+  }, [galleryReloadStatus, galleryQueryParams, currentItem]);
 
   // Favourites and votes lists are loading during first app load and will be updated after adding of new element. It's made in order to have a fresh list to check if element already in the list before adding it.
 
@@ -74,6 +87,8 @@ function App() {
     };
     getFavourites();
   }, [favouritesLastUpdate]);
+
+  //! Refactor loading images for voting. Load a big set at once.
 
   useEffect(() => {
     const getImage = async () => {
@@ -129,7 +144,7 @@ function App() {
       time: new Date(),
     });
     setActionLog(newLog);
-    // Trigger to load new image.
+    // Trigger to load new image. Only after like/dislike pressing.
     buttonId !== 'favourite' && setImageLastLoad(new Date());
   };
 
@@ -144,6 +159,7 @@ function App() {
       return breedsQueryResult;
     }
   };
+
   return (
     <main className="container">
       <div className="wrapper">
@@ -163,6 +179,9 @@ function App() {
               currentBreed={currentBreed}
               breedsList={breedsList}
               setActiveItem={setCurrentItem}
+              setBreedsQueryParams={setBreedsQueryParams}
+              setGalleryReloadStatus={setGalleryReloadStatus}
+              setBreedsReloadStatus={setBreedsReloadStatus}
             >
               {currentItem === 'voting' && (
                 <Voting
@@ -180,19 +199,17 @@ function App() {
                   currentItem={currentItem}
                   imagesList={imagesList()}
                   breedsList={breedsList}
-                  setReloadStatus={setReloadStatus}
+                  setBreedsReloadStatus={setBreedsReloadStatus}
                 />
               )}
               {currentItem === 'gallery' && (
                 <Gallery
                   currentItem={currentItem}
+                  setGalleryQueryParams={setGalleryQueryParams}
                   breedsList={breedsList}
                   imagesList={imagesList()}
-                  reloadStatus={reloadStatus}
-                  setReloadStatus={setReloadStatus}
+                  setGalleryReloadStatus={setGalleryReloadStatus}
                   votingButtonHandler={votingButtonHandler}
-                  setCurrentImage={setCurrentImage}
-                  setImageLastLoad={setImageLastLoad}
                   favouritesList={favouritesList}
                 />
               )}

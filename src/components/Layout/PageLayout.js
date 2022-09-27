@@ -8,6 +8,11 @@ const PageLayout = (props) => {
     props.setActiveItem(btnId);
   };
 
+  const breedsQueryParamsHandler = (query) => {
+    props.setBreedsQueryParams(query);
+    props.setBreedsReloadStatus(true)
+  };
+
   return (
     <div className={classes['page-layout']}>
       <PageHeader
@@ -16,8 +21,8 @@ const PageLayout = (props) => {
         breedsList={props.breedsList}
         currentBreed={props.currentBreed}
         reloadStatus={props.reloadStatus}
-        setReloadStatus={props.setReloadStatus}
         setActiveItem={activeItemHandler}
+        setBreedsQueryParams={breedsQueryParamsHandler}
       />
       <PageWrapper>{props.children}</PageWrapper>
     </div>

@@ -13,6 +13,7 @@
   color: #ff868e;
   cursor: pointer;
   padding: 0 15px;
+  text-align: center;
   &.white {
     background: #fff;
     &:hover {
@@ -55,12 +56,6 @@
       background: #f8f8f7;
       border: 2px solid #fbe0dc;
       color: #ff868e;
-    }
-  }
-  &.mute {
-    cursor: default;
-    &:hover {
-      background: #ff868e;
     }
   }
 }

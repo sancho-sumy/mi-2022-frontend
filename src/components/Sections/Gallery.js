@@ -4,11 +4,11 @@ import GalleryFilter from '../UI/GalleryFilter';
 
 const Gallery = (props) => {
   useEffect(() => {
-    !props.imagesList.length && props.setReloadStatus(true);
+    !props.imagesList.length && props.setGalleryReloadStatus(true);
   });
 
   const onReloadPressed = () => {
-    props.setReloadStatus(true);
+    props.setGalleryReloadStatus(true);
   };
 
   const votingButtonHandler = (btnId, itemId) => {
@@ -18,7 +18,11 @@ const Gallery = (props) => {
 
   return (
     <React.Fragment>
-      <GalleryFilter breedsList={props.breedsList} setReloadStatus={onReloadPressed} />
+      <GalleryFilter
+        breedsList={props.breedsList}
+        setGalleryReloadStatus={onReloadPressed}
+        setGalleryQueryParams={props.setGalleryQueryParams}
+      />
       <GalleryList
         imagesList={props.imagesList}
         currentItem={props.currentItem}

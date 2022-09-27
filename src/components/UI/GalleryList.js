@@ -2,6 +2,7 @@ import React from 'react';
 
 import GalleryItem from './GalleryItem';
 import GalleryWrapper from './GalleryWrapper';
+import MessageItem from './MessageItem';
 
 const GalleryList = ({
   currentItem,
@@ -84,7 +85,17 @@ const GalleryList = ({
   };
 
   return (
+    //No item found message if image list is empty
     <React.Fragment>
+      {(currentItem === 'likes' && !!!imageItems().filter((item) => item.props.value).length) && (
+        <MessageItem>No item found</MessageItem>
+      )}
+      {(currentItem === 'dislikes' && !!!imageItems().filter((item) => !item.props.value).length) && (
+        <MessageItem>No item found</MessageItem>
+      )}
+      {(currentItem === 'favourites' && !imagesList.length) && (
+        <MessageItem>No item found</MessageItem>
+      )}
       {(currentItem === 'breeds' || currentItem === 'gallery' || currentItem === 'favourites') && (
         <GalleryWrapper imagesList={imageItems()} />
       )}

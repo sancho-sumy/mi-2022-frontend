@@ -62,7 +62,7 @@ const options = {
     limit: 5,
   },
   galleryRequest: {
-    limit: 5,
+    limit: 15,
   },
 };
 

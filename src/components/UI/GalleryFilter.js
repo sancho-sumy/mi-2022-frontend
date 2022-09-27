@@ -8,10 +8,10 @@ import options from '../../assets/options';
 import classes from './GalleryFilter.module.scss';
 
 function GalleryFilter({ breedsList, setGalleryReloadStatus, setGalleryQueryParams }) {
-  const [order, setOrder] = useState('');
-  const [breedId, setBreedId] = useState('');
-  const [limit, setLimit] = useState('');
-  const [type, setType] = useState('');
+  const [order, setOrder] = useState(options.galleryRequest.order);
+  const [breedId, setBreedId] = useState(options.galleryRequest.breed_ids);
+  const [limit, setLimit] = useState(options.galleryRequest.limit);
+  const [type, setType] = useState(options.galleryRequest.mime_types);
 
   const onReloadPressed = () => {
     setGalleryReloadStatus(true);
@@ -73,14 +73,14 @@ function GalleryFilter({ breedsList, setGalleryReloadStatus, setGalleryQueryPara
         <Select
           filterHandler={filterHandler}
           optionId={'order'}
-          value={options.galleryRequest.order}
+          value={order}
         >
           {orderItemsList}
         </Select>
       </div>
       <div>
         <h4>Type</h4>
-        <Select filterHandler={filterHandler} optionId={'type'} value={options.galleryRequest.mime_types}>
+        <Select filterHandler={filterHandler} optionId={'type'} value={type}>
           {typeItemsList}
         </Select>
       </div>
@@ -89,7 +89,7 @@ function GalleryFilter({ breedsList, setGalleryReloadStatus, setGalleryQueryPara
         <Select
           filterHandler={filterHandler}
           optionId={'breedId'}
-          value={options.galleryRequest.breed_ids}
+          value={breedId}
         >
           {breedsItemsList}
         </Select>
@@ -100,7 +100,7 @@ function GalleryFilter({ breedsList, setGalleryReloadStatus, setGalleryQueryPara
           <Select
             filterHandler={filterHandler}
             optionId={'limit'}
-            value={options.galleryRequest.limit}
+            value={limit}
           >
             {limitItemsList}
           </Select>

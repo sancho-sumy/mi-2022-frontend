@@ -20,16 +20,16 @@ function GalleryFilter({ breedsList, setGalleryReloadStatus, setGalleryQueryPara
   const filterHandler = (value, optionId) => {
     if (optionId === 'breedId') {
       options.galleryRequest.breed_ids = value;
-      setBreedId(value)
+      setBreedId(value);
     } else if (optionId === 'limit') {
       options.galleryRequest.limit = value;
-      setLimit(value)
+      setLimit(value);
     } else if (optionId === 'order') {
       options.galleryRequest.order = value;
-      setOrder(value)
+      setOrder(value);
     } else if (optionId === 'type') {
       options.galleryRequest.mime_types = value;
-      setType(value)
+      setType(value);
     }
     setGalleryQueryParams(options.galleryRequest);
   };
@@ -70,11 +70,7 @@ function GalleryFilter({ breedsList, setGalleryReloadStatus, setGalleryQueryPara
     <div className={clsx(classes['gallery-filter'])}>
       <div>
         <h4>Order</h4>
-        <Select
-          filterHandler={filterHandler}
-          optionId={'order'}
-          value={order}
-        >
+        <Select filterHandler={filterHandler} optionId={'order'} value={order}>
           {orderItemsList}
         </Select>
       </div>
@@ -86,22 +82,14 @@ function GalleryFilter({ breedsList, setGalleryReloadStatus, setGalleryQueryPara
       </div>
       <div>
         <h4>Breed</h4>
-        <Select
-          filterHandler={filterHandler}
-          optionId={'breedId'}
-          value={breedId}
-        >
+        <Select filterHandler={filterHandler} optionId={'breedId'} value={breedId}>
           {breedsItemsList}
         </Select>
       </div>
       <div>
         <h4>Limit</h4>
         <div className={clsx(classes.double)}>
-          <Select
-            filterHandler={filterHandler}
-            optionId={'limit'}
-            value={limit}
-          >
+          <Select filterHandler={filterHandler} optionId={'limit'} value={limit}>
             {limitItemsList}
           </Select>
           <div onClick={onReloadPressed}>

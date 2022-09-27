@@ -1,12 +1,8 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import GalleryList from '../UI/GalleryList';
 import GalleryFilter from '../UI/GalleryFilter';
 
 const Gallery = (props) => {
-  useEffect(() => {
-    !props.imagesList.length && props.setGalleryReloadStatus(true);
-  });
-
   const onReloadPressed = () => {
     props.setGalleryReloadStatus(true);
   };

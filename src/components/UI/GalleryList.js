@@ -21,13 +21,13 @@ const GalleryList = ({
       list = imagesList.map((item) => {
         return (
           <GalleryItem
-            src={item.url}
+            src={item?.url}
             alt={item.breeds?.length ? `Cat of ${item.breeds[0]?.name} breed` : 'Unknown breed'}
-            key={item.id}
-            imageId={item.id}
+            key={item?.id}
+            imageId={item?.id}
             btnId={'favourite'}
             btnText={
-              !!favouritesList.find((favItem) => favItem.image_id === item.id) ? (
+              !!favouritesList.find((favItem) => favItem.image_id === item?.id) ? (
                 <span style={{ fontSize: '20px' }} className="icon-fav-filled"></span>
               ) : (
                 <span style={{ fontSize: '20px' }} className="icon-fav"></span>
@@ -65,21 +65,40 @@ const GalleryList = ({
           />
         );
       });
-    } else if (currentItem === 'likes' || currentItem === 'dislikes') {
-      list = imagesList.map((item) => {
-        return (
-          <GalleryItem
-            src={item.image?.url}
-            alt={'Votes image'}
-            key={item.id}
-            imageId={item.id}
-            btnId={currentItem === 'likes' ? 'like' : 'dislike'}
-            btnText={<span style={{ fontSize: '20px' }} className="icon-trash"></span>}
-            onButtonClick={deleteItemHandler}
-            value={item.value}
-          />
-        );
-      });
+    } else if (currentItem === 'likes') {
+      list = imagesList
+        .filter((item) => item.value)
+        .map((item) => {
+          return (
+            <GalleryItem
+              src={item.image?.url}
+              alt={'Votes image'}
+              key={item.id}
+              imageId={item.id}
+              btnId={currentItem === 'likes' ? 'like' : 'dislike'}
+              btnText={<span style={{ fontSize: '20px' }} className="icon-trash"></span>}
+              onButtonClick={deleteItemHandler}
+              value={item.value}
+            />
+          );
+        });
+    } else if (currentItem === 'dislikes') {
+      list = imagesList
+        .filter((item) => !item.value)
+        .map((item) => {
+          return (
+            <GalleryItem
+              src={item.image?.url}
+              alt={'Votes image'}
+              key={item.id}
+              imageId={item.id}
+              btnId={currentItem === 'likes' ? 'like' : 'dislike'}
+              btnText={<span style={{ fontSize: '20px' }} className="icon-trash"></span>}
+              onButtonClick={deleteItemHandler}
+              value={item.value}
+            />
+          );
+        });
     }
     return list;
   };
@@ -87,27 +106,13 @@ const GalleryList = ({
   return (
     //No item found message if image list is empty
     <React.Fragment>
-      {(currentItem === 'likes' && !!!imageItems().filter((item) => item.props.value).length) && (
-        <MessageItem>No item found</MessageItem>
+      {(!imagesList.length ||
+        (currentItem === 'likes' && !!!imageItems().filter((item) => item.props.value)) ||
+        (currentItem === 'dislikes' &&
+          !!!imageItems().filter((item) => !item.props.value).length)) && (
+        <MessageItem>No items found</MessageItem>
       )}
-      {(currentItem === 'dislikes' && !!!imageItems().filter((item) => !item.props.value).length) && (
-        <MessageItem>No item found</MessageItem>
-      )}
-      {(currentItem === 'favourites' && !imagesList.length) && (
-        <MessageItem>No item found</MessageItem>
-      )}
-      {(currentItem === 'breeds' || currentItem === 'gallery' || currentItem === 'favourites') && (
-        <GalleryWrapper imagesList={imageItems()} />
-      )}
-      {(currentItem === 'likes' || currentItem === 'dislikes') && (
-        <GalleryWrapper
-          imagesList={
-            currentItem === 'likes'
-              ? imageItems().filter((item) => item.props.value)
-              : imageItems().filter((item) => !item.props.value)
-          }
-        />
-      )}
+      <GalleryWrapper imagesList={imageItems()} />
     </React.Fragment>
   );
 };

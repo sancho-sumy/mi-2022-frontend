@@ -23,10 +23,10 @@ function App() {
   const [imageLastLoad, setImageLastLoad] = useState({});
   const [breedsQueryParams, setBreedsQueryParams] = useState(options.defaultRequest);
   const [breedsQueryResult, setBreedsQueryResult] = useState([]);
-  const [breedsReloadStatus, setBreedsReloadStatus] = useState(false)
+  const [breedsReloadStatus, setBreedsReloadStatus] = useState(true);
   const [galleryQueryParams, setGalleryQueryParams] = useState(options.defaultRequest);
   const [galleryQueryResult, setGalleryQueryResult] = useState([]);
-  const [galleryReloadStatus, setGalleryReloadStatus] = useState(false);
+  const [galleryReloadStatus, setGalleryReloadStatus] = useState(true);
   const [breedsList, setBreedsList] = useState([]);
   const [favouritesList, setFavouritesList] = useState([]);
   const [votesList, setVotesList] = useState([]);

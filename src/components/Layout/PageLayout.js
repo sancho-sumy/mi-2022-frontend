@@ -10,7 +10,7 @@ const PageLayout = (props) => {
 
   const breedsQueryParamsHandler = (query) => {
     props.setBreedsQueryParams(query);
-    props.setBreedsReloadStatus(true)
+    props.setBreedsReloadStatus(true);
   };
 
   return (

@@ -1,10 +1,7 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import GalleryList from '../UI/GalleryList';
 
 const Breeds = (props) => {
-  useEffect(() => {
-    !props.imagesList.length && props.setBreedsReloadStatus(true);
-  });
 
   const openBreedInfoHandler = (item) => {
     if (item) {

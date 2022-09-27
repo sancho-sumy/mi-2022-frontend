@@ -52,7 +52,7 @@ const options = {
   breeds: [
     {
       name: 'All breeds',
-      value: '',
+      id: '',
     },
   ],
   defaultRequest: {

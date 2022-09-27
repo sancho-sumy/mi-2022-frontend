@@ -33,6 +33,7 @@ function App() {
   const [actionLog, setActionLog] = useState([]);
   const [favouritesLastUpdate, setFavouritesLastUpdate] = useState({});
   const [votesLastUpdate, setVotesLastUpdate] = useState({});
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     const getBreedsList = async () => {
@@ -47,11 +48,13 @@ function App() {
       return;
     }
     const getImages = async () => {
+      setLoading(true)
       const { data } = await thecatapi.get('/images/search', {
         params: breedsQueryParams,
       });
       setBreedsQueryResult(data);
       setBreedsReloadStatus(false);
+      setLoading(false)
     };
     getImages();
   }, [breedsReloadStatus, breedsQueryParams, currentItem]);
@@ -61,11 +64,13 @@ function App() {
       return;
     }
     const getImages = async () => {
+      setLoading(true)
       const { data } = await thecatapi.get('/images/search', {
         params: galleryQueryParams,
       });
       setGalleryQueryResult(data);
       setGalleryReloadStatus(false);
+      setLoading(false)
     };
     getImages();
   }, [galleryReloadStatus, galleryQueryParams, currentItem]);
@@ -73,9 +78,11 @@ function App() {
   // Favourites and votes lists are loading during first app load and will be updated after adding of new element. It's made in order to have a fresh list to check if element already in the list before adding it.
 
   useEffect(() => {
+    setLoading(true)
     const getVotes = async () => {
       const { data } = await thecatapi.get('/votes');
       setVotesList(data);
+      setLoading(false)
     };
     getVotes();
   }, [votesLastUpdate]);
@@ -91,9 +98,11 @@ function App() {
   //! Refactor loading images for voting. Load a big set at once.
 
   useEffect(() => {
+    setLoading(true)
     const getImage = async () => {
       const { data } = await thecatapi.get('/images/search');
       setCurrentImage(data[0]);
+      setLoading(false)
     };
     getImage();
   }, [imageLastLoad]);
@@ -123,11 +132,13 @@ function App() {
       setFavouritesLastUpdate(new Date());
     } else {
       if (!votesList.find((item) => item.image_id === imageId)) {
+        setLoading(true)
         await thecatapi.post('/votes', {
           image_id: imageId,
           value: buttonId === 'like' ? 1 : 0,
         });
         action = 'add';
+        setLoading(true)
       } else {
         await thecatapi.delete(`/votes/${votesList.find((item) => item.image_id === imageId).id}`);
         setFavouritesList(votesList.filter((item) => item.image_id !== imageId));
@@ -190,6 +201,7 @@ function App() {
                   favouritesList={favouritesList}
                   votesList={votesList}
                   votingButtonHandler={votingButtonHandler}
+                  loading={loading}
                 />
               )}
               {currentItem === 'breeds' && (
@@ -200,6 +212,7 @@ function App() {
                   imagesList={imagesList()}
                   breedsList={breedsList}
                   setBreedsReloadStatus={setBreedsReloadStatus}
+                  loading={loading}
                 />
               )}
               {currentItem === 'gallery' && (
@@ -211,6 +224,7 @@ function App() {
                   setGalleryReloadStatus={setGalleryReloadStatus}
                   votingButtonHandler={votingButtonHandler}
                   favouritesList={favouritesList}
+                  loading={loading}
                 />
               )}
               {(currentItem === 'favourites' ||

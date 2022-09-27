@@ -3,6 +3,7 @@ import clsx from 'clsx';
 
 import ImageFrame from '../UI/ImageFrame';
 import GalleryNavigation from '../UI/Controls/GalleryNavigation';
+import Loader from '../UI/Loader';
 
 import classes from './BreedsInfo.module.scss';
 import thecatapi from '../../apis/thecatapi';
@@ -10,9 +11,11 @@ import thecatapi from '../../apis/thecatapi';
 const BreedsInfo = ({ currentBreed }) => {
   const [queryResult, setQueryResult] = useState([]);
   const [currentImage, setCurrentImage] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const getImages = async () => {
+      setLoading(true);
       const { data } = await thecatapi.get('/images/search', {
         params: {
           breed_id: currentBreed,
@@ -21,6 +24,7 @@ const BreedsInfo = ({ currentBreed }) => {
       });
       setQueryResult(data);
       setCurrentImage(data[0].url);
+      setLoading(false);
     };
     getImages();
   }, [currentBreed]);
@@ -31,7 +35,8 @@ const BreedsInfo = ({ currentBreed }) => {
   return (
     <React.Fragment>
       <ImageFrame>
-        <img src={currentImage} alt={'Breed example'} />
+        {loading && <Loader />}
+        {!loading && <img src={currentImage} alt={'Breed example'} />}
         <GalleryNavigation
           queryResult={queryResult}
           onItemChange={onItemChange}

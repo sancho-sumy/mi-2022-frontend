@@ -1,6 +1,7 @@
 import React from 'react';
 import GalleryList from '../UI/GalleryList';
 import GalleryFilter from '../UI/GalleryFilter';
+import Loader from '../UI/Loader';
 
 const Gallery = (props) => {
   const onReloadPressed = () => {
@@ -19,12 +20,13 @@ const Gallery = (props) => {
         setGalleryReloadStatus={onReloadPressed}
         setGalleryQueryParams={props.setGalleryQueryParams}
       />
-      <GalleryList
+      {props.loading && <Loader/>}
+      {!props.loading && <GalleryList
         imagesList={props.imagesList}
         currentItem={props.currentItem}
         votingButtonHandler={votingButtonHandler}
         favouritesList={props.favouritesList}
-      />
+      />}
     </React.Fragment>
   );
 };

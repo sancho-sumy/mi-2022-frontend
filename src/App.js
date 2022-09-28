@@ -18,9 +18,11 @@ import PageLayout from './components/Layout/PageLayout';
 
 function App() {
   const [currentItem, setCurrentItem] = useState('home');
-  const [currentBreed, setCurrentBreed] = useState('beng');
+  const [currentBreed, setCurrentBreed] = useState();
   const [currentImage, setCurrentImage] = useState([]);
-  const [imageLastLoad, setImageLastLoad] = useState({});
+  const [imageLastLoad, setImageLastLoad] = useState();
+  const [searchQueryParams, setSearchQueryParams] = useState();
+  const [searchQueryResult, setSearchQueryResult] = useState([]);
   const [breedsQueryParams, setBreedsQueryParams] = useState(options.defaultRequest);
   const [breedsQueryResult, setBreedsQueryResult] = useState([]);
   const [breedsReloadStatus, setBreedsReloadStatus] = useState(true);
@@ -31,9 +33,9 @@ function App() {
   const [favouritesList, setFavouritesList] = useState([]);
   const [votesList, setVotesList] = useState([]);
   const [actionLog, setActionLog] = useState([]);
-  const [favouritesLastUpdate, setFavouritesLastUpdate] = useState({});
-  const [votesLastUpdate, setVotesLastUpdate] = useState({});
-  const [loading, setLoading] = useState(false)
+  const [favouritesLastUpdate, setFavouritesLastUpdate] = useState();
+  const [votesLastUpdate, setVotesLastUpdate] = useState();
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const getBreedsList = async () => {
@@ -48,13 +50,13 @@ function App() {
       return;
     }
     const getImages = async () => {
-      setLoading(true)
+      setLoading(true);
       const { data } = await thecatapi.get('/images/search', {
         params: breedsQueryParams,
       });
       setBreedsQueryResult(data);
       setBreedsReloadStatus(false);
-      setLoading(false)
+      setLoading(false);
     };
     getImages();
   }, [breedsReloadStatus, breedsQueryParams, currentItem]);
@@ -64,13 +66,13 @@ function App() {
       return;
     }
     const getImages = async () => {
-      setLoading(true)
+      setLoading(true);
       const { data } = await thecatapi.get('/images/search', {
         params: galleryQueryParams,
       });
       setGalleryQueryResult(data);
       setGalleryReloadStatus(false);
-      setLoading(false)
+      setLoading(false);
     };
     getImages();
   }, [galleryReloadStatus, galleryQueryParams, currentItem]);
@@ -78,11 +80,11 @@ function App() {
   // Favourites and votes lists are loading during first app load and will be updated after adding of new element. It's made in order to have a fresh list to check if element already in the list before adding it.
 
   useEffect(() => {
-    setLoading(true)
+    setLoading(true);
     const getVotes = async () => {
       const { data } = await thecatapi.get('/votes');
       setVotesList(data);
-      setLoading(false)
+      setLoading(false);
     };
     getVotes();
   }, [votesLastUpdate]);
@@ -98,11 +100,31 @@ function App() {
   //! Refactor loading images for voting. Load a big set at once.
 
   useEffect(() => {
-    setLoading(true)
+    setLoading(true);
+    const getImage = async () => {
+      const breed = await thecatapi.get('/breeds/search', {
+        params: { q: searchQueryParams },
+      });
+      if (breed.data.length) {
+        const { data } = await thecatapi.get('/images/search', {
+          params: { breed_id: breed.data[0]?.id, limit: 15 },
+        });
+        setSearchQueryResult(data);
+        setLoading(false);
+      } else {
+        setSearchQueryResult([]);
+        setLoading(false);
+      }
+    };
+    getImage();
+  }, [searchQueryParams]);
+
+  useEffect(() => {
+    setLoading(true);
     const getImage = async () => {
       const { data } = await thecatapi.get('/images/search');
       setCurrentImage(data[0]);
-      setLoading(false)
+      setLoading(false);
     };
     getImage();
   }, [imageLastLoad]);
@@ -132,13 +154,13 @@ function App() {
       setFavouritesLastUpdate(new Date());
     } else {
       if (!votesList.find((item) => item.image_id === imageId)) {
-        setLoading(true)
+        setLoading(true);
         await thecatapi.post('/votes', {
           image_id: imageId,
           value: buttonId === 'like' ? 1 : 0,
         });
         action = 'add';
-        setLoading(true)
+        setLoading(true);
       } else {
         await thecatapi.delete(`/votes/${votesList.find((item) => item.image_id === imageId).id}`);
         setFavouritesList(votesList.filter((item) => item.image_id !== imageId));
@@ -168,6 +190,8 @@ function App() {
       return galleryQueryResult;
     } else if (currentItem === 'breeds') {
       return breedsQueryResult;
+    } else if (currentItem === 'search') {
+      return searchQueryResult;
     }
   };
 
@@ -182,6 +206,7 @@ function App() {
           currentItem={currentItem}
           setActiveItem={setCurrentItem}
           currentBreed={currentBreed}
+          setSearchQueryParams={setSearchQueryParams}
         >
           {currentItem === 'home' && <Home />}
           {currentItem !== 'home' && (
@@ -193,6 +218,7 @@ function App() {
               setBreedsQueryParams={setBreedsQueryParams}
               setGalleryReloadStatus={setGalleryReloadStatus}
               setBreedsReloadStatus={setBreedsReloadStatus}
+              searchQueryParams={searchQueryParams}
             >
               {currentItem === 'voting' && (
                 <Voting
@@ -204,7 +230,7 @@ function App() {
                   loading={loading}
                 />
               )}
-              {currentItem === 'breeds' && (
+              {(currentItem === 'breeds' || currentItem === 'search') && (
                 <Breeds
                   setCurrentItem={setCurrentItem}
                   setCurrentBreed={setCurrentBreed}

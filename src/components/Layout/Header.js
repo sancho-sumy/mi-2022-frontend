@@ -5,9 +5,13 @@ import Button from '../UI/Controls/Button';
 import sectionsList from '../../assets/sectionsList';
 import classes from './Header.module.scss';
 
-const Header = ({ activeItem, currentItem }) => {
+const Header = ({ activeItem, currentItem, setSearchQueryParams }) => {
   const onButtonClick = (name) => {
     activeItem(name);
+  };
+
+  const searchSubmitHandler = (query) => {
+    setSearchQueryParams(query);
   };
 
   const itemsList = sectionsList.map(
@@ -28,7 +32,7 @@ const Header = ({ activeItem, currentItem }) => {
 
   return (
     <header className={classes.header}>
-      <Search />
+      <Search onSearchSubmit={searchSubmitHandler} currentItem={currentItem} />
       {itemsList}
     </header>
   );

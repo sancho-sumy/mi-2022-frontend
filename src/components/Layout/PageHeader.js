@@ -12,17 +12,6 @@ const onClickTemp = () => {
   console.log("Oops, that button doesn't seem to be working yet!");
 };
 
-// const UploadBlock = () => {
-//   return (
-//     <div className={clsx(classes.btn, classes.btn_upload)}>
-//       <Button onButtonClick={onClickTemp} design="light" btnId={'upload'}>
-//         <span style={{ fontSize: '16px' }} className="icon-upload"></span>
-//         <span style={{ marginLeft: '10px' }}>Upload</span>
-//       </Button>
-//     </div>
-//   );
-// };
-
 const ViewSettingsBlock = ({ breedsList, setBreedsQueryParams }) => {
   const filterHandler = (value, optionId) => {
     if (optionId === 'breedId') {

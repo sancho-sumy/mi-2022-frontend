@@ -37,7 +37,7 @@ const GalleryList = ({
           />
         );
       });
-    } else if (currentItem === 'breeds') {
+    } else if (currentItem === 'breeds' || currentItem === 'search') {
       list = imagesList.map((item) => {
         return (
           <GalleryItem
@@ -107,7 +107,7 @@ const GalleryList = ({
     //No item found message if image list is empty
     <React.Fragment>
       {(!imagesList.length ||
-        (currentItem === 'likes' && !!!imageItems().filter((item) => item.props.value)) ||
+        (currentItem === 'likes' && !!!imageItems().filter((item) => item.props.value).length) ||
         (currentItem === 'dislikes' &&
           !!!imageItems().filter((item) => !item.props.value).length)) && (
         <MessageItem>No items found</MessageItem>

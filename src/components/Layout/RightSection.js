@@ -7,6 +7,12 @@ const RightSection = (props) => {
     props.setActiveItem(item);
   };
 
+  const searchSubmitHandler = (query) => {
+    props.setActiveItem('search');
+    props.setSearchQueryParams(query);
+    console.log(query);
+  };
+
   return (
     <div className={classes['right-section']}>
       <section className={classes.wrapper}>
@@ -15,6 +21,7 @@ const RightSection = (props) => {
             currentItem={props.currentItem}
             activeItem={activeItemHandler}
             breedsList={props.breedsList}
+            setSearchQueryParams={searchSubmitHandler}
           />
         )}
         {props.children}

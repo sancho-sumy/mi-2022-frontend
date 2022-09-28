@@ -17,13 +17,12 @@ const PageLayout = (props) => {
     <div className={classes['page-layout']}>
       <PageHeader
         currentItem={props.currentItem}
-        limitItems={props.limitItems}
         breedsList={props.breedsList}
         currentBreed={props.currentBreed}
-        reloadStatus={props.reloadStatus}
         setActiveItem={activeItemHandler}
         setBreedsQueryParams={breedsQueryParamsHandler}
       />
+      {props.currentItem === 'search' && <div className={classes.search}>Search result for: <span>{props.searchQueryParams}</span></div>}
       <PageWrapper>{props.children}</PageWrapper>
     </div>
   );

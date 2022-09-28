@@ -13,8 +13,9 @@ const GalleryItem = ({ src, alt, btnText, currentItem, imageId, onButtonClick, b
       <div className={clsx(classes['favourite'])}>
         <div
           className={clsx(
-            currentItem !== 'breeds' && classes['favourite-btn'],
-            currentItem === 'breeds' && classes['info-btn']
+            currentItem === 'favourites' && classes['favourite-btn'],
+            currentItem === 'breeds' && classes['info-btn'],
+            currentItem === 'search' && classes['info-btn']
           )}
         >
           <Button onButtonClick={buttonClickHandler} isDisabled={!!!btnId} design="white">

@@ -28,12 +28,6 @@ const sectionsList = [
     location: 'mainMenu',
   },
   {
-    name: 'breedsInfo',
-    label_en: 'Breeds',
-    path: '/breeds/info',
-    mainMenuItem: false,
-  },
-  {
     name: 'likes',
     label_en: 'Likes',
     image: 'icon-like',
@@ -56,6 +50,21 @@ const sectionsList = [
     background: '#FFF',
     path: '/dislikes',
     location: 'header',
+  },
+  {
+    name: 'breedsInfo',
+    label_en: 'Breeds',
+    path: '/breeds/info',
+  },
+  {
+    name: 'search',
+    label_en: 'Search',
+    path: '/search',
+  },
+  {
+    name: 'upload',
+    label_en: 'Upload',
+    path: '/gallery/upload',
   },
 ];
 

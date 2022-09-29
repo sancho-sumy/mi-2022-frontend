@@ -13,7 +13,7 @@ const GalleryItem = ({ src, alt, btnText, currentItem, imageId, onButtonClick, b
       <div className={clsx(classes['favourite'])}>
         <div
           className={clsx(
-            currentItem === 'favourites' && classes['favourite-btn'],
+            ((currentItem !== 'breeds' && currentItem !== 'search') && classes['favourite-btn']),
             currentItem === 'breeds' && classes['info-btn'],
             currentItem === 'search' && classes['info-btn']
           )}
